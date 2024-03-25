@@ -1,11 +1,12 @@
+import * as dotenv from "dotenv"
+dotenv.config()
+
 import { Test, TestingModule } from "@nestjs/testing"
 import axios from "axios"
 import { AiChatService } from "./ai-chat.service"
 import { GenerateTextDto } from "./dto/generate-text.dto"
 import { Chat } from "./entities/chat/chat.entity"
 import { YandexChatRole } from "./types/yandex.type"
-
-jest.mock("axios")
 
 describe("AiChatService", () => {
     let service: AiChatService
@@ -23,7 +24,7 @@ describe("AiChatService", () => {
     })
 
     it("test generate", async () => {
-        ;(axios.post as jest.Mock).mockResolvedValue({
+        const postSpy = jest.spyOn(axios, "post").mockResolvedValue({
             data: {
                 result: {
                     alternatives: [
@@ -43,6 +44,23 @@ describe("AiChatService", () => {
         const generateTextDto = new GenerateTextDto(chat)
 
         expect(await service.generate(generateTextDto)).toEqual(chat)
-        console.log(chat)
+        console.log("test generate", chat)
+
+        postSpy.mockRestore()
+    })
+
+    it("test generate with api key", async () => {
+        if (!process.env.API_KEY || !process.env.FOLDER_ID) return
+
+        const chat = new Chat({
+            role: YandexChatRole.USER,
+            text: "question",
+        })
+
+        const generateTextDto = new GenerateTextDto(chat)
+
+        expect(await service.generate(generateTextDto)).toBeInstanceOf(Chat)
+
+        console.log("test generate with api key", chat)
     })
 })

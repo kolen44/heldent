@@ -35,7 +35,6 @@ export class AiChatService {
 
         try {
             const response = await axios.post(url, body, config)
-            console.log(response.data.result.alternatives)
             return response.data.result.alternatives
         } catch (err) {
             if (err && err.response && err.response.data)
