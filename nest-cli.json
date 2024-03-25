@@ -3,6 +3,18 @@
   "collection": "@nestjs/schematics",
   "sourceRoot": "src",
   "compilerOptions": {
-    "deleteOutDir": true
+    "deleteOutDir": true,
+    "webpack": true
+  },
+  "projects": {
+    "ai-chat": {
+      "type": "library",
+      "root": "libs/ai-chat",
+      "entryFile": "index",
+      "sourceRoot": "libs/ai-chat/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/ai-chat/tsconfig.lib.json"
+      }
+    }
   }
 }
