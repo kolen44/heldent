@@ -22,7 +22,7 @@ export class UserService {
             )
         }
         const user = await this.userRepository.save({
-            name: createUserDto.name,
+            name: createUserDto?.name,
             subjects: createUserDto.subjects,
         })
         return { user }

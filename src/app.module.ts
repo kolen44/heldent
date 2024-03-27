@@ -5,6 +5,7 @@ import { AppController } from "./app.controller"
 import { AppService } from "./app.service"
 import { GraphsModule } from "./generateGraph/graphs.module"
 import { GratesModule } from "./grates/grates.module"
+import { User } from "./user/entities/user.entity"
 import { UserModule } from "./user/user.module"
 
 @Module({
@@ -22,7 +23,7 @@ import { UserModule } from "./user/user.module"
                 password: configService.get("DB_PASSWORD"),
                 database: configService.get("DB_NAME"),
                 synchronize: true,
-                entities: [__dirname + "/**/*.entity{.ts,.js}"],
+                entities: [User],
             }),
             inject: [ConfigService],
         }),
