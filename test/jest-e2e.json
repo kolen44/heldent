@@ -12,6 +12,8 @@
   },
   "moduleNameMapper": {
     "@ai-chat/ai-chat/(.*)": "<rootDir>/../libs/ai-chat/src/$1",
-    "@ai-chat/ai-chat": "<rootDir>/../libs/ai-chat/src"
+    "@ai-chat/ai-chat": "<rootDir>/../libs/ai-chat/src",
+    "@app/token/(.*)": "<rootDir>/../libs/token/src/$1",
+    "@app/token": "<rootDir>/../libs/token/src"
   }
 }

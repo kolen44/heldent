@@ -17,4 +17,16 @@ export class UserController {
     create(@Body() createUserDto: CreateUserDto) {
         return this.userService.create(createUserDto)
     }
+
+    @Post("find-one")
+    @UsePipes(new ValidationPipe())
+    findOne(@Body() data: { id: number }) {
+        return this.userService.findOne(data.id)
+    }
+
+    @Post("find-all")
+    @UsePipes(new ValidationPipe())
+    findAll(@Body() data: { data: string }) {
+        return this.userService.findAll(data)
+    }
 }

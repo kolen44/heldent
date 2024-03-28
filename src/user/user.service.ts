@@ -1,3 +1,4 @@
+import { TokenService } from "@app/token"
 import { BadRequestException, Injectable } from "@nestjs/common"
 import { InjectRepository } from "@nestjs/typeorm"
 import { Repository } from "typeorm"
@@ -8,6 +9,7 @@ import { User } from "./entities/user.entity"
 export class UserService {
     constructor(
         @InjectRepository(User) private userRepository: Repository<User>,
+        private tokenService: TokenService,
     ) {}
 
     async create(createUserDto: CreateUserDto) {
@@ -26,5 +28,22 @@ export class UserService {
             subjects: createUserDto.subjects,
         })
         return { user }
+    }
+
+    async findOne(id: number) {
+        const user = await this.userRepository.findOne({
+            where: {
+                id,
+            },
+        })
+
+        return { user }
+    }
+
+    async findAll({ data }) {
+        const check = this.tokenService.checkByToken(data)
+        if (check) {
+            return "proverka yes"
+        }
     }
 }
