@@ -23,6 +23,12 @@
       ],
       "@ai-chat/ai-chat/*": [
         "libs/ai-chat/src/*"
+      ],
+      "@app/token": [
+        "libs/token/src"
+      ],
+      "@app/token/*": [
+        "libs/token/src/*"
       ]
     }
   }

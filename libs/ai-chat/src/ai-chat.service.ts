@@ -1,4 +1,4 @@
-import { Injectable } from "@nestjs/common"
+import { BadRequestException, Injectable } from "@nestjs/common"
 import axios from "axios"
 import { GenerateTextDto } from "./dto/generate-text.dto"
 import { Chat } from "./entities/chat/chat.entity"
@@ -48,7 +48,10 @@ export class AiChatService {
         const { chat } = generateTextDto
         const messageData = await this.getResponse(chat.chatData)
 
-        if (!messageData) return null
+        if (!messageData)
+            throw new BadRequestException(
+                "Возникла ошибка при генерации ответа!",
+            )
 
         return chat.addMessage({
             role: YandexChatRole.ASSISTANT,

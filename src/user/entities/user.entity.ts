@@ -14,8 +14,8 @@ export class User {
     @Column()
     name: string
 
-    @Column()
-    subjects: string
+    @Column({ type: "varchar", nullable: true })
+    subjects: Record<string, number>
 
     @CreateDateColumn()
     createdAt: Date
