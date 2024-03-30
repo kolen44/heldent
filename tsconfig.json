@@ -29,6 +29,12 @@
       ],
       "@app/token/*": [
         "libs/token/src/*"
+      ],
+      "@analysis/analysis": [
+        "libs/analysis/src"
+      ],
+      "@analysis/analysis/*": [
+        "libs/analysis/src/*"
       ]
     }
   }
