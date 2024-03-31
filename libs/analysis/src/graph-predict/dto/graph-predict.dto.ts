@@ -35,7 +35,7 @@ export class GraphPredictDto {
     getPredictData() {
         return {
             predictionCount: this.predictionCount,
-            graphInArray: this.graph.arr,
+            graphInArray: this.graph.arrOfNum,
         }
     }
 }

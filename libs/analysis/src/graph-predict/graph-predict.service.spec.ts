@@ -35,6 +35,6 @@ describe("GraphPredictService", () => {
         })
         const result = service.predict(graphPredictDto)
 
-        console.log(JSON.stringify(result))
+        expect(result.arrOfNum.length).toBe(300)
     })
 })

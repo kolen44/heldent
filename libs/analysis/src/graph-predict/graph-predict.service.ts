@@ -1,5 +1,6 @@
 import { Injectable, OnModuleDestroy, OnModuleInit } from "@nestjs/common"
-import { GraphPredictDto } from "./dto/graph-predict.dto.js"
+import { GraphPredictDto } from "./dto/graph-predict.dto"
+import { Graph } from "./entities/graph.entity"
 import Model from "./entities/model.entity.js"
 
 @Injectable()
@@ -19,9 +20,17 @@ export class GraphPredictService implements OnModuleInit, OnModuleDestroy {
         this.model.dispose()
     }
 
-    public predict(graphPredictDto: GraphPredictDto) {
+    public predict(graphPredictDto: GraphPredictDto): Graph {
         const { predictionCount, graphInArray } =
             graphPredictDto.getPredictData()
-        return this.model.predictMany(predictionCount, graphInArray)
+
+        const predictResult = this.model.predictMany(
+            predictionCount,
+            graphInArray,
+        ) as number[]
+
+        const graph = new Graph(predictResult)
+
+        return graph
     }
 }
