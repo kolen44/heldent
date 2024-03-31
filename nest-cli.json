@@ -24,6 +24,15 @@
       "compilerOptions": {
         "tsConfigPath": "libs/token/tsconfig.lib.json"
       }
+    },
+    "analysis": {
+      "type": "library",
+      "root": "libs/analysis",
+      "entryFile": "index",
+      "sourceRoot": "libs/analysis/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/analysis/tsconfig.lib.json"
+      }
     }
   }
 }

@@ -1,13 +1,13 @@
 {
 	"name": "heldent",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"description": "",
 	"author": "",
 	"private": true,
 	"license": "UNLICENSED",
 	"scripts": {
 		"build": "nest build",
-		"format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\" \"libs/**/*.ts\"",
+		"format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
 		"start": "nest start",
 		"start:dev": "nest start --watch",
 		"start:debug": "nest start --debug --watch",
@@ -28,10 +28,10 @@
 		"@nestjs/passport": "^10.0.3",
 		"@nestjs/platform-express": "^10.0.0",
 		"@nestjs/typeorm": "^10.0.2",
+		"argon2": "^0.40.1",
 		"axios": "^1.6.8",
 		"class-transformer": "^0.5.1",
 		"class-validator": "^0.14.1",
-		"dotenv": "^16.4.5",
 		"passport": "^0.7.0",
 		"passport-jwt": "^4.0.1",
 		"passport-local": "^1.0.0",
@@ -56,6 +56,7 @@
 		"eslint-config-prettier": "^9.0.0",
 		"eslint-plugin-prettier": "^5.0.0",
 		"jest": "^29.5.0",
+		"prettier": "^3.0.0",
 		"source-map-support": "^0.5.21",
 		"supertest": "^6.3.3",
 		"ts-jest": "^29.1.0",
@@ -70,7 +71,7 @@
 			"json",
 			"ts"
 		],
-		"rootDir": ".",
+		"rootDir": "src",
 		"testRegex": ".*\\.spec\\.ts$",
 		"transform": {
 			"^.+\\.(t|j)s$": "ts-jest"
@@ -78,21 +79,7 @@
 		"collectCoverageFrom": [
 			"**/*.(t|j)s"
 		],
-		"coverageDirectory": "./coverage",
-		"testEnvironment": "node",
-		"roots": [
-			"<rootDir>/src/",
-			"<rootDir>/libs/"
-		],
-		"moduleNameMapper": {
-			"^@ai-chat/ai-chat(|/.*)$": "<rootDir>/libs/ai-chat/src/$1"
-		}
-	},
-	"prettier": {
-		"tabWidth": 4,
-		"semi": false,
-		"singleQuote": false,
-		"trailingComma": "all",
-		"bracketSpacing": true
+		"coverageDirectory": "../coverage",
+		"testEnvironment": "node"
 	}
 }
