@@ -1,26 +1,27 @@
-import { Injectable } from "@nestjs/common"
-import { CreateGraphPredictDto } from "./dto/create-graph-predict.dto"
-import { UpdateGraphPredictDto } from "./dto/update-graph-predict.dto"
+import { Injectable, OnModuleDestroy, OnModuleInit } from "@nestjs/common"
+import { GraphPredictDto } from "./dto/graph-predict.dto.js"
+import Model from "./entities/model.entity.js"
 
 @Injectable()
-export class GraphPredictService {
-    create(createGraphPredictDto: CreateGraphPredictDto) {
-        return "This action adds a new graphPredict"
+export class GraphPredictService implements OnModuleInit, OnModuleDestroy {
+    private model: Model
+
+    async onModuleInit(): Promise<void> {
+        // console.log(`The module has been initialized.`)
+        this.model = new Model({ lengthInput: 100 })
+        await this.model.load(
+            "libs/analysis/src/graph-predict/training-models/normal-working-model/model.json",
+        )
     }
 
-    findAll() {
-        return `This action returns all graphPredict`
+    onModuleDestroy() {
+        console.log("The module has been destroyed.")
+        this.model.dispose()
     }
 
-    findOne(id: number) {
-        return `This action returns a #${id} graphPredict`
-    }
-
-    update(id: number, updateGraphPredictDto: UpdateGraphPredictDto) {
-        return `This action updates a #${id} graphPredict`
-    }
-
-    remove(id: number) {
-        return `This action removes a #${id} graphPredict`
+    public predict(graphPredictDto: GraphPredictDto) {
+        const { predictionCount, graphInArray } =
+            graphPredictDto.getPredictData()
+        return this.model.predictMany(predictionCount, graphInArray)
     }
 }
