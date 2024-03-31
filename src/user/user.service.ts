@@ -15,7 +15,7 @@ export class UserService {
     async create(createUserDto: CreateUserDto) {
         const existUser = await this.userRepository.findOne({
             where: {
-                name: createUserDto.name,
+                email: createUserDto.email,
             },
         })
         if (existUser) {
@@ -24,8 +24,9 @@ export class UserService {
             )
         }
         const user = await this.userRepository.save({
-            name: createUserDto?.name,
+            email: createUserDto?.email,
             subjects: createUserDto.subjects,
+            password: createUserDto.password,
         })
         return { user }
     }

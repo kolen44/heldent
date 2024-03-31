@@ -12,10 +12,13 @@ export class User {
     id: number
 
     @Column()
-    name: string
+    email: string
+
+    @Column()
+    password: string
 
     @Column({ type: "varchar", nullable: true })
-    subjects: Record<string, number>
+    subjects?: Record<string, number>
 
     @CreateDateColumn()
     createdAt: Date

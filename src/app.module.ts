@@ -3,6 +3,7 @@ import { ConfigModule, ConfigService } from "@nestjs/config"
 import { TypeOrmModule } from "@nestjs/typeorm"
 import { AppController } from "./app.controller"
 import { AppService } from "./app.service"
+import { AuthModule } from "./auth/auth.module"
 import { GraphsModule } from "./generateGraph/graphs.module"
 import { GratesModule } from "./grates/grates.module"
 import { User } from "./user/entities/user.entity"
@@ -28,6 +29,7 @@ import { UserModule } from "./user/user.module"
             inject: [ConfigService],
         }),
         GratesModule,
+        AuthModule,
     ],
     controllers: [AppController],
     providers: [AppService],

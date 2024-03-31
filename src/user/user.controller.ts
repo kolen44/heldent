@@ -29,4 +29,10 @@ export class UserController {
     findAll(@Body() data: { data: string }) {
         return this.userService.findAll(data)
     }
+
+    @Post("find-all")
+    @UsePipes(new ValidationPipe())
+    getOne(@Body() data: { email: string }) {
+        return this.userService.findAll({ data })
+    }
 }
