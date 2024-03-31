@@ -14,6 +14,8 @@
     "@ai-chat/ai-chat/(.*)": "<rootDir>/../libs/ai-chat/src/$1",
     "@ai-chat/ai-chat": "<rootDir>/../libs/ai-chat/src",
     "@app/token/(.*)": "<rootDir>/../libs/token/src/$1",
-    "@app/token": "<rootDir>/../libs/token/src"
+    "@app/token": "<rootDir>/../libs/token/src",
+    "@analysis/analysis/(.*)": "<rootDir>/../libs/analysis/src/$1",
+    "@analysis/analysis": "<rootDir>/../libs/analysis/src"
   }
 }

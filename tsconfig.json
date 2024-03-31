@@ -1,35 +1,30 @@
 {
-  "compilerOptions": {
-    "module": "commonjs",
-    "declaration": true,
-    "removeComments": true,
-    "emitDecoratorMetadata": true,
-    "experimentalDecorators": true,
-    "allowSyntheticDefaultImports": true,
-    "target": "ES2021",
-    "sourceMap": true,
-    "outDir": "./dist",
-    "baseUrl": "./",
-    "incremental": true,
-    "skipLibCheck": true,
-    "strictNullChecks": false,
-    "noImplicitAny": false,
-    "strictBindCallApply": false,
-    "forceConsistentCasingInFileNames": false,
-    "noFallthroughCasesInSwitch": false,
-    "paths": {
-      "@ai-chat/ai-chat": [
-        "libs/ai-chat/src"
-      ],
-      "@ai-chat/ai-chat/*": [
-        "libs/ai-chat/src/*"
-      ],
-      "@app/token": [
-        "libs/token/src"
-      ],
-      "@app/token/*": [
-        "libs/token/src/*"
-      ]
+    "compilerOptions": {
+        "allowJs": true,
+        "module": "commonjs",
+        "declaration": true,
+        "removeComments": true,
+        "emitDecoratorMetadata": true,
+        "experimentalDecorators": true,
+        "allowSyntheticDefaultImports": true,
+        "target": "ES5",
+        "sourceMap": true,
+        "outDir": "./dist",
+        "baseUrl": "./",
+        "incremental": true,
+        "skipLibCheck": true,
+        "strictNullChecks": false,
+        "noImplicitAny": false,
+        "strictBindCallApply": false,
+        "forceConsistentCasingInFileNames": false,
+        "noFallthroughCasesInSwitch": false,
+        "paths": {
+            "@ai-chat/ai-chat": ["libs/ai-chat/src"],
+            "@ai-chat/ai-chat/*": ["libs/ai-chat/src/*"],
+            "@app/token": ["libs/token/src"],
+            "@app/token/*": ["libs/token/src/*"],
+            "@analysis/analysis": ["libs/analysis/src"],
+            "@analysis/analysis/*": ["libs/analysis/src/*"]
+        }
     }
-  }
 }
