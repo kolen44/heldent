@@ -28,6 +28,7 @@
 		"@nestjs/passport": "^10.0.3",
 		"@nestjs/platform-express": "^10.0.0",
 		"@nestjs/typeorm": "^10.0.2",
+		"@tensorflow/tfjs": "^4.17.0",
 		"argon2": "^0.40.1",
 		"axios": "^1.6.8",
 		"class-transformer": "^0.5.1",
@@ -38,6 +39,7 @@
 		"pg": "^8.11.3",
 		"reflect-metadata": "^0.2.0",
 		"rxjs": "^7.8.1",
+		"tfjs-node-save": "^0.0.2",
 		"typeorm": "^0.3.20"
 	},
 	"devDependencies": {
@@ -71,7 +73,7 @@
 			"json",
 			"ts"
 		],
-		"rootDir": "src",
+		"rootDir": ".",
 		"testRegex": ".*\\.spec\\.ts$",
 		"transform": {
 			"^.+\\.(t|j)s$": "ts-jest"
