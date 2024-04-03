@@ -33,6 +33,15 @@
       "compilerOptions": {
         "tsConfigPath": "libs/analysis/tsconfig.lib.json"
       }
+    },
+    "parser": {
+      "type": "library",
+      "root": "libs/parser",
+      "entryFile": "index",
+      "sourceRoot": "libs/parser/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/parser/tsconfig.lib.json"
+      }
     }
   }
 }

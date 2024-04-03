@@ -16,6 +16,8 @@
     "@app/token/(.*)": "<rootDir>/../libs/token/src/$1",
     "@app/token": "<rootDir>/../libs/token/src",
     "@analysis/analysis/(.*)": "<rootDir>/../libs/analysis/src/$1",
-    "@analysis/analysis": "<rootDir>/../libs/analysis/src"
+    "@analysis/analysis": "<rootDir>/../libs/analysis/src",
+    "Y/parser/(.*)": "<rootDir>/../libs/parser/src/$1",
+    "Y/parser": "<rootDir>/../libs/parser/src"
   }
 }
