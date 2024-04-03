@@ -9,7 +9,7 @@ export default function Header() {
 					<div className='text-xl md:text-2xl pb-7 md:pb-9 xl:pb-14 flex justify-center md:justify-start'>
 						HELDENT
 					</div>
-					<div className='text-2xl md:text-7xl pb-12 md:pb-0'>
+					<div className='text-2xl md:text-7xl pb-12 '>
 						<h1 className='pb-2 text-center md:text-start'>
 							<span className='text-[#D2FF1D] text-4xl md:text-7xl '>
 								Heldent
