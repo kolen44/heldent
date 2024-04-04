@@ -4,7 +4,7 @@ import AbilityCard from '../../widgets/AbilityCard.js/AbilityCard'
 export default function Abilities() {
 	return (
 		<div className='bg-[#0A062A]'>
-			<div className='bg-[url(/image2.webp)] bg-no-repeat bg-cover h-fit opacity-90'>
+			<div className='bg-[url(/image2.webp)] bg-no-repeat bg-cover h-fit opacity-90 min-h-screen'>
 				<div className='absolute'>
 					<Image src='/planet1.webp' width={200} height={200} alt='Student' />
 				</div>
@@ -17,7 +17,9 @@ export default function Abilities() {
 				</div>
 				<div className='flex items-center md:items-start flex-col md:flex-row md:justify-between md:px-28  mt-52 relative gap-5'>
 					<AbilityCard
-						text={'Произведет анализ показателей по каждому предмету'}
+						text={
+							'Произведет анализ показателей по каждому предмету и не только'
+						}
 						img={'/blank.webp'}
 					/>
 					<AbilityCard
