@@ -1,12 +1,9 @@
 #button,
 #refl {
 	color: #004;
-	font-family: Impact, 'Arial Black', Helvetica, Arial, sans-serif;
-	text-transform: uppercase;
 	background-color: #d2ff1d;
 	display: inline-block;
-	box-shadow: rgba(255, 255, 255, 0.2) 0 0 200px 100px,
-		rgba(62, 174, 126, 0.3) 0 0 40px;
+	box-shadow: rgba(255, 255, 255, 0.2) 0 0 200px 100px;
 	position: relative;
 	-webkit-user-select: none;
 	-moz-user-select: none;
