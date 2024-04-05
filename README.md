@@ -4,17 +4,19 @@
 
 Чтобы запустить только сервер, без контейнера, можно запустить через npm:
 
-```bash
-npm run start:dev
-```
-
 Для запуска **Development** режима
 
 ```bash
-npm run start
+cd server
+npm run start:dev
 ```
 
 Для запуска **Product** режима
+
+```bash
+cd server
+npm run start
+```
 
 ## Для запуска server + client
 
@@ -36,26 +38,27 @@ npm run start
 docker compose -f "docker-compose.yml" up -d --build
 ```
 
-DOC Ниже нужно будет добавить чё показывает сайт
-
-Далее зайдя по этой ссылке - [http://localhost:1234](http://localhost:1234) \
-Мы попадаем на сайт, который показывает ...
+Далее зайдя по этой ссылке - [http://localhost:3000](http://localhost:3000) получаем сайт.
 
 ### Запуск в локально сети
+
+Для запуска server + client, нужно вводить команды в разных терминалах и из корневой папки.
 
 Запускаем сервер с помощью npm:
 
 ```bash
+cd server
 npm run start:dev
 ```
 
 Запускаем клиент с помощью npm:
 
-DOC Ниже нужно будет добавить запуск клиента
-
 ```bash
-
+cd client
+npm run dev
 ```
+
+Далее заходим по ссылке [http://localhost:3000](http://localhost:3000) и получаем сайт.
 
 # О проекте
 
