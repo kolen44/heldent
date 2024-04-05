@@ -1,13 +1,16 @@
 import * as dotenv from 'dotenv';
-dotenv.config();
+import { join } from 'path';
+dotenv.config({ path: join(__dirname, '../../.env') });
 
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
+
+const PORT = process.env.SERVER_PORT || 3000;
 
 async function bootstrap() {
 	const app = await NestFactory.create(AppModule);
 	app.enableShutdownHooks();
 	app.setGlobalPrefix('api');
-	await app.listen(5000, () => {});
+	await app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
 }
 bootstrap();
