@@ -1,3 +1,4 @@
+import { StudentModule } from '@analysis/analysis/educational-metrics/student/student.module';
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -32,6 +33,10 @@ import { UserModule } from './user/user.module';
 			}),
 			inject: [ConfigService],
 		}),
+
+		TypeOrmModule.forFeature([Student]), // TODO Удалить
+		StudentModule, // TODO Удалить
+
 		GratesModule,
 		AuthModule,
 	],
