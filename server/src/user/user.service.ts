@@ -25,7 +25,8 @@ export class UserService {
 		}
 		const user = await this.userRepository.save({
 			email: createUserDto?.email,
-			subjects: createUserDto.subjects,
+			// FIXME
+			// subjects: createUserDto.subjects,
 			password: createUserDto.password,
 		});
 		return { user };

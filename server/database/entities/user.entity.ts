@@ -2,12 +2,15 @@ import {
 	Column,
 	CreateDateColumn,
 	Entity,
+	JoinTable,
+	ManyToMany,
 	OneToMany,
 	PrimaryGeneratedColumn,
 	UpdateDateColumn,
 } from 'typeorm';
 import { Attendance } from './attendance.entity';
 import { Grade } from './grade.entity';
+import { Subject } from './subject.entity';
 
 @Entity()
 export class User {
@@ -20,9 +23,6 @@ export class User {
 	@Column()
 	password: string;
 
-	// @Column({ type: 'varchar', nullable: true })
-	// subjects?: Record<string, number>;
-
 	@CreateDateColumn()
 	createdAt: Date;
 
@@ -33,5 +33,9 @@ export class User {
 	grades: Grade[];
 
 	@OneToMany(() => Attendance, (attendance) => attendance.user)
-	attendances: Grade[];
+	attendances: Attendance[];
+
+	@ManyToMany(() => Subject, (subject) => subject.users)
+	@JoinTable()
+	subjects: Subject[];
 }

@@ -19,6 +19,7 @@ import { UserModule } from './user/user.module';
 		ConfigModule.forRoot({ isGlobal: true }),
 		TypeOrmModule.forRootAsync({
 			imports: [ConfigModule],
+			// TODO выделить в конфиг в server/database/config
 			useFactory: (configService: ConfigService) => ({
 				type: 'postgres',
 				host: configService.get('DB_HOST'),
