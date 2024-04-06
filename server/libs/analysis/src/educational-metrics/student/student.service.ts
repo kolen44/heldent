@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
+import { Student } from './entities/student.entity';
 import { StudentClassConfig } from './types/config.type';
-import { Student } from './types/student.type';
 import { Subject } from './types/subject.type';
 
 const oneDay = 1000 * 60 * 60 * 24;
@@ -96,7 +96,7 @@ export class StudentService {
 		});
 	}
 
-	private formatSubject(subject: Student['subjects'][string]) {
+	private formatSubject(subject: Subject) {
 		// const meanGrade =
 		//     subject.grades.reduce((acc, val) => acc + this.stableGrade(val.grade), 0) /
 		//     subject.grades.length
@@ -122,43 +122,43 @@ export class StudentService {
 
 		return {
 			performance,
-			subjectPerformanceIndex: subjectPerformanceIndexRounded,
+			performanceIndex: subjectPerformanceIndexRounded,
 		};
 	}
 
 	public formatOne(student: Student) {
-		const subjects = Object.entries(student.subjects).reduce(
-			(subjects, [subjectName, subject]) => {
-				subjects[subjectName] = {
-					subjectName,
-					...subject,
-					...this.formatSubject(subject),
+		const subjectsData = student.getSubjectsData();
+		const subjects = subjectsData.reduce(
+			(subjects, { name, grades, attendance }) => {
+				subjects[name] = {
+					name,
+					grades,
+					attendance,
+					...this.formatSubject({ grades, attendance }),
 				};
 				return subjects;
 			},
 			{} as Record<
 				string,
 				Subject & {
-					subjectName: string;
+					name: string;
 					performance: {
 						date: Date;
 						performance: number;
 					}[];
-					subjectPerformanceIndex: number;
+					performanceIndex: number;
 				}
 			>,
 		);
 
 		const subjectsSortedByGrade = Object.values(subjects)
-			.sort(
-				(a, b) => b.subjectPerformanceIndex - a.subjectPerformanceIndex,
-			)
+			.sort((a, b) => b.performanceIndex - a.performanceIndex)
 			.map((subject) => ({
-				subjectName: subject.subjectName,
-				subjectPerformanceIndex: subject.subjectPerformanceIndex,
+				name: subject.name,
+				performanceIndex: subject.performanceIndex,
 			}));
 
-		return { ...student, subjects, subjectsSortedByGrade };
+		return { name: student.getName(), subjects, subjectsSortedByGrade };
 	}
 
 	public formatMany(students: Student[]) {

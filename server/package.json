@@ -89,7 +89,8 @@
       "<rootDir>/libs/"
     ],
     "moduleNameMapper": {
-      "^Y/parser(|/.*)$": "<rootDir>/libs/parser/src/$1"
+      "^Y/parser(|/.*)$": "<rootDir>/libs/parser/src/$1",
+      "^database(|/.*)$": "<rootDir>/database/$1"
     }
   }
 }
