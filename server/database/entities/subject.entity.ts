@@ -9,7 +9,7 @@ import {
 } from 'typeorm';
 import { Attendance } from './attendance.entity';
 import { Grade } from './grade.entity';
-import { User } from './user.entity';
+import { Student } from './student.entity';
 
 @Entity()
 export class Subject {
@@ -31,6 +31,6 @@ export class Subject {
 	@OneToMany(() => Attendance, (attendance) => attendance.subject)
 	attendances: Attendance[];
 
-	@ManyToMany(() => User, (user) => user.subjects)
-	users: User[];
+	@ManyToMany(() => Student, (student) => student.subjects)
+	students: Student[];
 }

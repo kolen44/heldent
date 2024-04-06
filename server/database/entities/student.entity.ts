@@ -13,7 +13,7 @@ import { Grade } from './grade.entity';
 import { Subject } from './subject.entity';
 
 @Entity()
-export class User {
+export class Student {
 	@PrimaryGeneratedColumn()
 	id: number;
 
@@ -29,13 +29,13 @@ export class User {
 	@UpdateDateColumn()
 	updateAt: Date;
 
-	@OneToMany(() => Grade, (grade) => grade.user)
+	@OneToMany(() => Grade, (grade) => grade.student)
 	grades: Grade[];
 
-	@OneToMany(() => Attendance, (attendance) => attendance.user)
-	attendances: Attendance[];
+	@OneToMany(() => Attendance, (attendance) => attendance.student)
+	attendance: Attendance[];
 
-	@ManyToMany(() => Subject, (subject) => subject.users)
+	@ManyToMany(() => Subject, (subject) => subject.students)
 	@JoinTable()
 	subjects: Subject[];
 }

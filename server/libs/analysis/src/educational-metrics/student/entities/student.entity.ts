@@ -1,20 +1,20 @@
-import { User } from 'database/entities/user.entity';
+import { Student as StudentDB } from 'database/entities/student.entity';
 import { Student as StudentType } from '../types/student.type';
 import { Subject } from '../types/subject.type';
 
 export class Student {
-	constructor(public readonly student: User | StudentType) {
+	constructor(public readonly student: StudentDB | StudentType) {
 		if (
-			this.student instanceof User &&
+			this.student instanceof StudentDB &&
 			!this.student.subjects &&
 			!this.student.grades &&
-			!this.student.attendances
+			!this.student.attendance
 		)
 			throw new Error('Subject, grades and attendances is required');
 	}
 
 	public getName() {
-		if (this.student instanceof User) {
+		if (this.student instanceof StudentDB) {
 			return this.student.email;
 		}
 
@@ -22,7 +22,7 @@ export class Student {
 	}
 
 	public getSubjectsData(): Subject[] {
-		if (this.student instanceof User) {
+		if (this.student instanceof StudentDB) {
 			const student = this.student.subjects.map((subject) => ({
 				name: subject.name,
 				grades: subject.grades.map((grade) => ({

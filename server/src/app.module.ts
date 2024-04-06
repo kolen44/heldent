@@ -3,8 +3,8 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Attendance } from 'database/entities/attendance.entity';
 import { Grade } from 'database/entities/grade.entity';
+import { Student } from 'database/entities/student.entity';
 import { Subject } from 'database/entities/subject.entity';
-import { User } from 'database/entities/user.entity';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
@@ -28,7 +28,7 @@ import { UserModule } from './user/user.module';
 				password: configService.get('DB_PASSWORD'),
 				database: configService.get('DB_NAME'),
 				synchronize: true,
-				entities: [User, Subject, Grade, Attendance],
+				entities: [Student, Subject, Grade, Attendance],
 			}),
 			inject: [ConfigService],
 		}),

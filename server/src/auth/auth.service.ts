@@ -1,14 +1,14 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
-import { User } from 'database/entities/user.entity';
+import { Student } from 'database/entities/student.entity';
 import { Repository } from 'typeorm';
 import { LoginAuthDto } from './dto/login-auth.dto';
 
 @Injectable()
 export class AuthService {
 	constructor(
-		@InjectRepository(User) private userRepository: Repository<User>,
+		@InjectRepository(Student) private userRepository: Repository<Student>,
 		private jwtService: JwtService,
 	) {}
 
