@@ -73,8 +73,9 @@ export class StudentService {
 			}));
 	}
 
-	// Функция переводит оценки + посещаемость в успеваемость. 1 к 1: оценки к успеваемости, а посещаемость берётся средняя за месяц
-	private getPerformance(subject: Subject) {
+	// Функция переводит оценки + посещаемость в успеваемость.
+	// 1 к 1: оценки к успеваемости, а посещаемость берётся средняя за месяц
+	private getPerformance(subject: Pick<Subject, 'grades' | 'attendance'>) {
 		const attendanceMean = this.getMeanAttendanceInMonth(
 			subject.attendance,
 		);
@@ -96,17 +97,7 @@ export class StudentService {
 		});
 	}
 
-	private formatSubject(subject: Subject) {
-		// const meanGrade =
-		//     subject.grades.reduce((acc, val) => acc + this.stableGrade(val.grade), 0) /
-		//     subject.grades.length
-
-		// const meanAttendance =
-		//     subject.attendance.reduce(
-		//         (acc, val) => acc + this.stableAttendance(val.attendance),
-		//         0
-		//     ) / subject.attendance.length
-
+	private formatSubject(subject: Pick<Subject, 'grades' | 'attendance'>) {
 		const depth = 5;
 
 		const performance = this.getPerformance(subject);
@@ -117,8 +108,6 @@ export class StudentService {
 		const subjectPerformanceIndex = meanSubjectPerformance / 50 - 1;
 		const subjectPerformanceIndexRounded =
 			Math.round(subjectPerformanceIndex * 10 ** depth) / 10 ** depth;
-
-		// Math.round((calculatePerformance(meanGrade, meanAttendance) / 50 - 1) * 1000) / 1000
 
 		return {
 			performance,
@@ -158,7 +147,7 @@ export class StudentService {
 				performanceIndex: subject.performanceIndex,
 			}));
 
-		return { name: student.getName(), subjects, subjectsSortedByGrade };
+		return { subjects, subjectsSortedByGrade };
 	}
 
 	public formatMany(students: Student[]) {

@@ -11,7 +11,7 @@ export class Attendance {
 	date: Date;
 
 	@Column()
-	attendance: number;
+	attendance: boolean;
 
 	@ManyToOne(() => Subject, (subject) => subject.attendances)
 	subject: Subject;
