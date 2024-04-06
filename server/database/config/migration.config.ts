@@ -1,12 +1,11 @@
-import * as dotenv from 'dotenv';
-dotenv.config({ path: join(__dirname, '../../../.env') });
-
-import { Attendance } from 'database/entities/attendance.entity';
-import { Grade } from 'database/entities/grade.entity';
-import { Subject } from 'database/entities/subject.entity';
-import { User } from 'database/entities/user.entity';
+import { config } from 'dotenv';
 import { join } from 'path';
 import { DataSource, DataSourceOptions } from 'typeorm';
+import { Attendance } from '../entities/attendance.entity';
+import { Grade } from '../entities/grade.entity';
+import { Student } from '../entities/student.entity';
+import { Subject } from '../entities/subject.entity';
+config({ path: join(__dirname, '../../../.env') });
 
 export const options: DataSourceOptions = {
 	type: 'postgres',
@@ -16,12 +15,14 @@ export const options: DataSourceOptions = {
 	password: process.env.DB_PASSWORD,
 	database: process.env.DB_NAME,
 
-	entities: [User, Subject, Grade, Attendance],
+	entities: [Student, Subject, Grade, Attendance],
 	migrations: [join(__dirname, '../migrations/*.ts')],
 	migrationsTableName: 'migrations',
 	synchronize: true,
 	logging: true,
 };
+
+console.log(options);
 
 const dataSource = new DataSource(options);
 
