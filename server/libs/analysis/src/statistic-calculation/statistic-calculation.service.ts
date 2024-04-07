@@ -5,6 +5,7 @@ export class StatisticCalculationService {
 	public sum = (arr: number[]) => arr.reduce((acc, val) => acc + val, 0);
 	public mean = (arr: number[]) => this.sum(arr) / arr.length;
 
+	// Вычисление "Корреляции" https://wiki.loginom.ru/articles/correlation-coefficient.html
 	private calculateCorelation(data1: number[], data2: number[]) {
 		if (data1.length !== data2.length)
 			throw new Error('Length of data1 must be equal to length of data2');
@@ -33,6 +34,7 @@ export class StatisticCalculationService {
 		return numerator / denominator;
 	}
 
+	// Вычисление "Стандартного отклонения" https://ru.wikipedia.org/wiki/Среднеквадратическое_отклонение
 	private calculateStandardDeviation(data: number[]) {
 		if (data.length === 0) throw new Error('Data has been Array');
 
@@ -44,6 +46,7 @@ export class StatisticCalculationService {
 		return Math.pow((1 / data.length) * variance, 0.5);
 	}
 
+	// Вычисление "Медианы"
 	private calculateMidian(data: number[]) {
 		data.sort((a, b) => a - b)[data.length / 2];
 
@@ -55,6 +58,7 @@ export class StatisticCalculationService {
 		return data[Math.round(data.length / 2)];
 	}
 
+	// Обработка данных для "Корреляции"
 	public corelation(data1: number[], data2: number[]) {
 		if (data1.length === 0 || data2.length === 0)
 			throw new Error('Data has been Array');
@@ -78,11 +82,13 @@ export class StatisticCalculationService {
 		return undefined;
 	}
 
+	// Обработка данных для "Стандартного отклонения"
 	public standardDeviation(data: number[]) {
 		if (data.length === 0) throw new Error('Data has been Array');
 		return this.calculateStandardDeviation(data);
 	}
 
+	// Обработка данных для "Медианы"
 	public midian(data: number[]) {
 		if (data.length === 0) throw new Error('Data has been Array');
 		return this.calculateMidian(data);

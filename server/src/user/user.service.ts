@@ -1,14 +1,14 @@
 import { TokenService } from '@app/token';
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Student } from 'database/entities/student.entity';
 import { Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create-user.dto';
-import { User } from './entities/user.entity';
 
 @Injectable()
 export class UserService {
 	constructor(
-		@InjectRepository(User) private userRepository: Repository<User>,
+		@InjectRepository(Student) private userRepository: Repository<Student>,
 		private tokenService: TokenService,
 	) {}
 
@@ -25,7 +25,8 @@ export class UserService {
 		}
 		const user = await this.userRepository.save({
 			email: createUserDto?.email,
-			subjects: createUserDto.subjects,
+			// FIXME
+			// subjects: createUserDto.subjects,
 			password: createUserDto.password,
 		});
 		return { user };
