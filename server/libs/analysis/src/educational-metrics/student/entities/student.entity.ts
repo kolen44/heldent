@@ -35,19 +35,11 @@ export class Student {
 				})),
 			}));
 
-			console.log(student);
-
 			return student;
-
-			// return this.student.subjects.map((subject) => ({
-			// 	name: subject.name,
-			// 	grades: subject.grades,
-			// 	attendance: subject.attendances,
-			// }));
 		}
 
-		return Object.entries(this.student.subjects).map(([name, subject]) => ({
-			name,
+		return Object.entries(this.student.subjects).map(([, subject]) => ({
+			name: subject.name,
 			grades: subject.grades,
 			attendance: subject.attendance,
 		}));

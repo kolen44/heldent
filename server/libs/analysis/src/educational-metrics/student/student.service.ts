@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { Student } from './entities/student.entity';
 import { StudentClassConfig } from './types/config.type';
+import { CompletedSubject } from './types/format-subject.type';
 import { Subject } from './types/subject.type';
 
 const oneDay = 1000 * 60 * 60 * 24;
@@ -38,26 +39,32 @@ export class StudentService {
 
 	// Функция создаёт массив, в котором каждое число это средняя посещаемость за месяц
 	// То есть за 2 месяца будет массив из двух элементов
-	private getMeanAttendanceInMonth(attendance: Subject['attendance']) {
+	private getMeanAttendanceInMonth(
+		attendance: Subject['attendance'],
+	): Subject['attendance'] {
 		let lastDate = new Date(attendance[attendance.length - 1].date);
+
+		const getStableObject = (date: Date, stableAttendance: number) => ({
+			date,
+			attendance: [stableAttendance],
+		});
+
 		return attendance
 			.reduce(
 				(acc, val) => {
 					const date = new Date(val.date);
+					const stableAttendance = this.stableAttendance(
+						val.attendance,
+					);
 
 					if (
 						date.getMonth() !== lastDate.getMonth() ||
 						!acc.length
 					) {
 						lastDate = date;
-						acc.push({
-							date: date,
-							attendance: [this.stableAttendance(val.attendance)],
-						});
+						acc.push(getStableObject(date, stableAttendance));
 					} else {
-						acc[acc.length - 1].attendance.push(
-							this.stableAttendance(val.attendance),
-						);
+						acc[acc.length - 1].attendance.push(stableAttendance);
 					}
 
 					return acc;
@@ -76,10 +83,10 @@ export class StudentService {
 	// Функция переводит оценки + посещаемость в успеваемость.
 	// 1 к 1: оценки к успеваемости, а посещаемость берётся средняя за месяц
 	private getPerformance(subject: Pick<Subject, 'grades' | 'attendance'>) {
+		let lastIndex = 0;
 		const attendanceMean = this.getMeanAttendanceInMonth(
 			subject.attendance,
 		);
-		let lastIndex = 0;
 
 		return subject.grades.map(({ date, grade }) => {
 			const attendanceItem = attendanceMean[lastIndex];
@@ -97,8 +104,11 @@ export class StudentService {
 		});
 	}
 
+	// Функция высчитывает успеваемость по предмету в виде массива
+	// И вычисляет среднюю успеваемость в виде от -1 до 1
 	private formatSubject(subject: Pick<Subject, 'grades' | 'attendance'>) {
-		const depth = 5;
+		const decimalPlaces = 5; // Количество знаков после запятой
+		const roundingFactor = 10 ** decimalPlaces;
 
 		const performance = this.getPerformance(subject);
 
@@ -107,7 +117,8 @@ export class StudentService {
 			performance.length;
 		const subjectPerformanceIndex = meanSubjectPerformance / 50 - 1;
 		const subjectPerformanceIndexRounded =
-			Math.round(subjectPerformanceIndex * 10 ** depth) / 10 ** depth;
+			Math.round(subjectPerformanceIndex * roundingFactor) /
+			roundingFactor;
 
 		return {
 			performance,
@@ -118,26 +129,16 @@ export class StudentService {
 	public formatOne(student: Student) {
 		const subjectsData = student.getSubjectsData();
 		const subjects = subjectsData.reduce(
-			(subjects, { name, grades, attendance }) => {
-				subjects[name] = {
+			(subjects, { name, grades, attendance }) => ({
+				...subjects,
+				[name]: {
 					name,
 					grades,
 					attendance,
 					...this.formatSubject({ grades, attendance }),
-				};
-				return subjects;
-			},
-			{} as Record<
-				string,
-				Subject & {
-					name: string;
-					performance: {
-						date: Date;
-						performance: number;
-					}[];
-					performanceIndex: number;
-				}
-			>,
+				},
+			}),
+			{} as Record<string, CompletedSubject>,
 		);
 
 		const subjectsSortedByGrade = Object.values(subjects)
