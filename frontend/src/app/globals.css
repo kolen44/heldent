@@ -34,6 +34,17 @@ body {
 }
 
 * {
-	animation: typing 2s steps(22), blink 0.5s step-end infinite alternate;
 	font-family: 'TTTravels';
+}
+
+body::-webkit-scrollbar {
+	width: 12px; /* ширина scrollbar */
+}
+body::-webkit-scrollbar-track {
+	background: #0a062a; /* цвет дорожки */
+}
+body::-webkit-scrollbar-thumb {
+	background-color: #d2ff1d; /* цвет плашки */
+	border-radius: 20px; /* закругления плашки */
+	border: 3px solid #d2ff1d; /* padding вокруг плашки */
 }

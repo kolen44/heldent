@@ -16,7 +16,18 @@ export async function handlerSendGPTCalendar(props) {
 
 		console.log(requestText)
 		const url = 'api/Calendar'
-		const res = await fetch(url)
+		let postBody = {
+			text: requestText,
+			system:
+				'Твоя профессиональный человек который отправляет в ответ текст в поставленном формате JSON',
+		}
+		const res = await fetch(url, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json',
+			},
+			body: JSON.stringify(postBody),
+		})
 		let responseText = res
 		toast.update(id, {
 			render: 'Ответ сгенерирован !',

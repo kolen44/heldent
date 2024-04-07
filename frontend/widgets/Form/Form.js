@@ -3,9 +3,9 @@ import GreenButton from '../GreenButton/GreenButton'
 export default function Form() {
 	return (
 		<div className='w-screen relative  flex justify-center z-10 '>
-			<div className='py-8 w-fit px-5 md:px-28 bg-[#30284A] backdrop-blur-3xl  bg-[#30284A]/50 min-w-5/6 flex flex-col justify-center rounded-lg shadow-2xl shadow-slate-950 gap-5 '>
+			<div className='py-8 w-fit px-4  md:px-28 bg-[#30284A] backdrop-blur-3xl  bg-[#30284A]/50 min-w-5/6 flex flex-col justify-center rounded-lg shadow-2xl shadow-slate-950 gap-5 '>
 				<div className='flex justify-center '>
-					<h2 className='text-2xl font-bold text-5xl text-center text-[#D9D9D9]'>
+					<h2 className='font-bold text-5xl text-center text-[#D9D9D9]'>
 						Связаться с нами
 					</h2>
 				</div>
@@ -45,7 +45,9 @@ export default function Form() {
 				</div>
 
 				<div className='flex justify-center mt-5'>
-					<GreenButton text={'Получить'} />
+					<button type='submit'>
+						<GreenButton text={'Отправить'} />
+					</button>
 				</div>
 			</div>
 		</div>
