@@ -1,16 +1,12 @@
-import { StudentModule } from '@analysis/analysis/educational-metrics/student/student.module';
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Attendance } from 'database/entities/attendance.entity';
-import { Grade } from 'database/entities/grade.entity';
-import { Student } from 'database/entities/student.entity';
-import { Subject } from 'database/entities/subject.entity';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { GraphsModule } from './generateGraph/graphs.module';
 import { GratesModule } from './grates/grates.module';
+import { User } from './user/entities/user.entity';
 import { UserModule } from './user/user.module';
 
 @Module({
@@ -20,7 +16,6 @@ import { UserModule } from './user/user.module';
 		ConfigModule.forRoot({ isGlobal: true }),
 		TypeOrmModule.forRootAsync({
 			imports: [ConfigModule],
-			// TODO выделить в конфиг в server/database/config
 			useFactory: (configService: ConfigService) => ({
 				type: 'postgres',
 				host: configService.get('DB_HOST'),
@@ -29,14 +24,10 @@ import { UserModule } from './user/user.module';
 				password: configService.get('DB_PASSWORD'),
 				database: configService.get('DB_NAME'),
 				synchronize: true,
-				entities: [Student, Subject, Grade, Attendance],
+				entities: [User],
 			}),
 			inject: [ConfigService],
 		}),
-
-		TypeOrmModule.forFeature([Student]), // TODO Удалить
-		StudentModule, // TODO Удалить
-
 		GratesModule,
 		AuthModule,
 	],
