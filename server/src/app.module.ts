@@ -11,6 +11,7 @@ import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { GraphsModule } from './generateGraph/graphs.module';
 import { GratesModule } from './grates/grates.module';
+import { StudentModule as StudentModuleController } from './student/student.module';
 import { UserModule } from './user/user.module';
 
 @Module({
@@ -39,6 +40,7 @@ import { UserModule } from './user/user.module';
 
 		GratesModule,
 		AuthModule,
+		StudentModuleController,
 	],
 	controllers: [AppController],
 	providers: [AppService],

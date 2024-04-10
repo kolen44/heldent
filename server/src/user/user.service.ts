@@ -42,10 +42,10 @@ export class UserService {
 		return { user };
 	}
 
-	async findAll({ data }) {
-		const check = this.tokenService.checkByToken(data);
-		if (check) {
-			return 'proverka yes';
-		}
-	}
+	// async findAll({ data }) {
+	// 	const check = this.tokenService.checkByToken(data);
+	// 	if (check) {
+	// 		return 'proverka yes';
+	// 	}
+	// }
 }
