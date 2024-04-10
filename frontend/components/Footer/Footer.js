@@ -14,16 +14,16 @@ export default function Footer() {
 		return () => clearInterval(interval)
 	}, [])
 	return (
-		<div className='h-fit min-h-[117vh] overflow-x-hidden md:min-h-[122vh] bg-[url(/footer.webp)] bg-no-repeat bg-cover text-[#FFF] overflow-hidden'>
+		<div className='h-fit min-h-[117vh] 2xl:min-h-[109vh] overflow-x-hidden md:min-h-[122vh] bg-[url(/footer.webp)] bg-no-repeat bg-cover text-[#FFF] overflow-hidden'>
 			<div className=' pt-20 w-screen justify-center text-center flex-col absolute hidden sm:flex'>
-				<div className='text-[#D2FF1D] text-4xl  md:text-5xl'>
+				<div className='text-[#D2FF1D] text-4xl  md:text-5xl 2xl:text-7xl'>
 					Остались вопросы?
 				</div>
-				<div className='text-2xl hidden lg:block md:text-4xl '>
+				<div className='text-2xl hidden lg:block md:text-4xl 2xl:text-6xl'>
 					Свяжитесь с нами!
 				</div>
 			</div>
-			<div className='absolute mt-28  h-full flex items-end'>
+			<div className='absolute h-full flex items-end'>
 				<Form />
 			</div>
 			<div className='relative lg:absolute hidden md:flex  -z-1 w-screen  items-start justify-end'>

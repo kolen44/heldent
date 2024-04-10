@@ -25,7 +25,7 @@ export default function Abilities() {
 					</motion.div>
 				</div>
 
-				<div className='text-3xl md:text-5xl text-center text-[#FFF] pt-20'>
+				<div className='text-3xl md:text-5xl 2xl:text-7xl text-center text-[#FFF] pt-20'>
 					<h2 className='text-end sm:text-center'>Что умеет</h2>
 					<h2>
 						Делать Heldent <span className='text-[#D2FF1D]'>?</span>

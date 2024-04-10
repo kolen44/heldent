@@ -13,7 +13,7 @@ export function Course() {
 		let width = window.innerWidth
 		let count = 2000
 		if (width < 1000) {
-			count = 3000
+			count = 3500
 		}
 		const handleScroll = () => {
 			controls.start({ scale: 0.1 + scrollY.current / count })
@@ -52,8 +52,8 @@ export function Course() {
 				<div className='md:p-20 md:pr-40 mr-0 flex flex-col gap-20 text-center md:text-start w-fit'>
 					<div className='text-4xl md:text-5xl text-[#FFF]'>
 						<motion.div animate={controls}>
-							<h2>
-								<span className='text-[#D2FF1D] text-5xl md:text-7xl text-start'>
+							<h2 className='xl:text-center'>
+								<span className='text-[#D2FF1D] text-5xl md:text-7xl xl:text-start'>
 									Посмотри
 								</span>{' '}
 								<br></br>
@@ -61,14 +61,16 @@ export function Course() {
 							</h2>
 						</motion.div>
 					</div>
-					<div className='flex flex-col md:flex-row gap-10 items-center'>
+					<div className='flex flex-col md:flex-row gap-28 w-fit items-center 2xl:pr-28'>
 						<AbilityCard
 							text={
 								<Link href={'https://youtu.be/ioKLrNt8KYs?si=MrvoHXUEyWwVdZ7l'}>
 									<span className='text-center'>
 										Обучающее видео<br></br>
 										<br></br>
-										<h3 className='text-sm text-[#D2FF1D]'>Подробнее...</h3>
+										<h3 className='text-sm 2xl:text-xl  text-[#D2FF1D]'>
+											Подробнее...
+										</h3>
 									</span>
 								</Link>
 							}
@@ -80,7 +82,9 @@ export function Course() {
 									<span className='text-center'>
 										Обучающее видео<br></br>
 										<br></br>
-										<h3 className='text-sm text-[#D2FF1D]'>Подробнее...</h3>
+										<h3 className='text-sm 2xl:text-xl text-[#D2FF1D]'>
+											Подробнее...
+										</h3>
 									</span>
 								</Link>
 							}

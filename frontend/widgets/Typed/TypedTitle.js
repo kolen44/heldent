@@ -8,9 +8,9 @@ export const TypedTitle = () => {
 		const typed = new Typed(el.current, {
 			strings: ['студентов <br> университета', 'школьников', 'учителей'],
 			startDelay: 300,
-			typeSpeed: 150,
-			backSpeed: 150,
-			backDelay: 150,
+			typeSpeed: 70,
+			backSpeed: 70,
+			backDelay: 300,
 			loop: true,
 		})
 

@@ -5,7 +5,7 @@ export default function GreenButton({ text, hover = false }) {
 	return (
 		<div className={`bg-[#D2FF1D] h-fit w-fit py-3 px-10 duration-300 `}>
 			<h3
-				className='text-xl md:text-3xl text-black font-medium'
+				className='text-xl md:text-3xl 2xl:text-5xl text-black font-medium'
 				id={styles.button}
 			>
 				{text}

@@ -19,7 +19,7 @@ export function Recommendations() {
 	return (
 		<div className='h-fit overflow-hidden min-h-screen bg-[url(/picks.webp)] bg-no-repeat bg-cover opacity-90 text-[#FFF] '>
 			<div className='flex absolute w-screen  flex-col justify-center text-center pt-20'>
-				<div className='text-2xl md:text-4xl '>
+				<div className='text-2xl md:text-4xl 2xl:text-7xl'>
 					<span className='text-[#D2FF1D] '>Heldent</span> рекомендует вам{' '}
 					<br></br> использовать API!
 				</div>
@@ -28,7 +28,7 @@ export function Recommendations() {
 						<GreenButton text={'К документации'} />
 					</Link>
 				</div>
-				<div className='mt-28  md:mt-36'>
+				<div className='mt-28 2xl:mt-64 md:mt-36'>
 					<ParallaxScroller />
 				</div>
 			</div>
