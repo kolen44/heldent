@@ -11,7 +11,7 @@ export function Course() {
 
 	useEffect(() => {
 		let width = window.innerWidth
-		let count = 2000
+		let count = 2500
 		if (width < 1000) {
 			count = 3500
 		}
@@ -61,7 +61,7 @@ export function Course() {
 							</h2>
 						</motion.div>
 					</div>
-					<div className='flex flex-col md:flex-row gap-28 w-fit items-center 2xl:pr-28'>
+					<div className='flex flex-col md:flex-row gap-28 w-screen md:w-fit items-center justify-center  2xl:pr-28'>
 						<AbilityCard
 							text={
 								<Link href={'https://youtu.be/ioKLrNt8KYs?si=MrvoHXUEyWwVdZ7l'}>

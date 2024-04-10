@@ -3,7 +3,7 @@ import GreenButton from '../GreenButton/GreenButton'
 export default function Form() {
 	return (
 		<div className='w-screen relative  flex justify-center z-10 '>
-			<div className='py-8 md:-mb-8 xl:-mb-0 w-fit px-4  md:px-28 bg-[#30284A] backdrop-blur-3xl  bg-[#30284A]/50 min-w-5/6 flex flex-col justify-center rounded-lg shadow-2xl shadow-slate-950 gap-5 '>
+			<div className='py-8 md:-mb-8 2xl:-mb-0  w-fit px-4  md:px-28 bg-[#30284A] backdrop-blur-3xl  bg-[#30284A]/50 min-w-5/6 flex flex-col justify-center rounded-lg shadow-2xl shadow-slate-950 gap-5 '>
 				<div className='flex justify-center '>
 					<h2 className='font-bold text-5xl  text-center text-[#D9D9D9]'>
 						Связаться с нами

@@ -36,8 +36,8 @@ export default function Header() {
 							<TypedTitle />
 						</h2>
 					</div>
-					<div className='max-w-2xl text-center md:text-start pb-24 md:pb-8 xl:pb-24 text-2xl'>
-						<p className='leading-11  md:leading-5 font-medium'>
+					<div className='max-w-2xl text-center md:text-start pb-24 md:pb-8 xl:pb-24 text-xl md:text-2xl'>
+						<p className='leading-7  md:leading-5 font-medium'>
 							Стремитесь к успеху в учебе, но чувствуете, что не всегда можете
 							эффективно отслеживать свой прогресс? Хотите контролировать свои
 							достижения и быть информированными о своих успехах на пути к

@@ -14,7 +14,7 @@ export default function Footer() {
 		return () => clearInterval(interval)
 	}, [])
 	return (
-		<div className='h-fit min-h-[117vh] 2xl:min-h-[109vh] overflow-x-hidden md:min-h-[122vh] bg-[url(/footer.webp)] bg-no-repeat bg-cover text-[#FFF] overflow-hidden'>
+		<div className='h-fit min-h-[100vh]  md:min-h-[109vh] overflow-x-hidden  bg-[url(/footer.webp)] bg-no-repeat bg-cover text-[#FFF] overflow-hidden'>
 			<div className=' pt-20 w-screen justify-center text-center flex-col absolute hidden sm:flex'>
 				<div className='text-[#D2FF1D] text-4xl  md:text-5xl 2xl:text-7xl'>
 					Остались вопросы?

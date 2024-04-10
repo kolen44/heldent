@@ -7,7 +7,7 @@ export default function AbilityCard({ img, text }) {
 				<Image src={img} width={170} height={152} alt='Card' />
 			</div>
 
-			<div className='pt-7 text-[#FFF] text-center text-3xl md:text-3xl'>
+			<div className='pt-7 text-[#FFF] text-center text-xl md:text-3xl'>
 				{text}
 			</div>
 		</div>
