@@ -7,9 +7,13 @@ import { Dialog, Transition } from '@headlessui/react'
 import { CheckIcon, ExclamationTriangleIcon } from '@heroicons/react/24/solid'
 import { Fragment, useEffect, useState } from 'react'
 import { ToastContainer } from 'react-toastify'
-import { handlerSendGPTCalendar } from '../../features/ChatGPTCalendar'
+import { useStores } from '../../store/useStore'
+import { CalendarModal } from '../../widgets/calendarModal/CalendarModal'
 
 export default function Calendar() {
+	const calendarPlan = useStores(state => state.calendarPlan)
+	const [confidenceVisibleBoolean, setConfidenceVisibleBoolean] =
+		useState(false)
 	const [events, setEvents] = useState([
 		{ title: 'Сделать уроки', id: '1' },
 		{ title: 'Убраться дома', id: '2' },
@@ -66,9 +70,8 @@ export default function Calendar() {
 	}
 
 	async function addCalendarPlan(data) {
-		const array = JSON.parse(data)
 		let id = 10
-		array.forEach((el, number) => {
+		data.forEach((el, number) => {
 			const event = {
 				...allEvents,
 				start: el.data,
@@ -82,22 +85,16 @@ export default function Calendar() {
 	}
 	useEffect(() => {
 		const timeoutId = setTimeout(() => {
-			async function createPlan() {
-				const today = new Date().toISOString().substring(0, 10)
-				const createPlanArray = await handlerSendGPTCalendar({
-					date: today,
-					subject: 'химии',
-					curse: 3,
-				})
-				await addCalendarPlan(createPlanArray)
+			console.log(calendarPlan)
+			if (calendarPlan.length) {
+				addCalendarPlan(calendarPlan)
 			}
-			createPlan()
 		}, 200)
 		return () => {
 			console.log('clearTimeout')
 			clearTimeout(timeoutId)
 		}
-	}, [])
+	}, [calendarPlan])
 
 	function handleDeleteModal(data) {
 		setDeleteShowModal(true)
@@ -149,6 +146,8 @@ export default function Calendar() {
 			<div className='grid grid-cols-10'>
 				<ToastContainer />
 				<div className='col-span-8'>
+					{confidenceVisibleBoolean && <CalendarModal />}
+
 					<FullCalendar
 						plugins={[dayGridPlugin, interactionPlugin, timeGridPlugin]}
 						headerToolbar={{
@@ -175,17 +174,32 @@ export default function Calendar() {
 						Переместите событие на календарь или создайте свое кликом по дню
 						календаря
 					</h1>
-					<div
-						className='fc-event border-2   p-1 m-2 w-full rounded-md ml-auto flex justify-center items-center  text-center bg-white'
-						title='Тренировка'
-					>
-						Тренировка
-					</div>
-					<div
-						className='fc-event border-2   p-1 m-2 w-full rounded-md ml-auto flex justify-center items-center  text-center bg-white'
-						title='Учеба'
-					>
-						Учеба
+					<div className='flex flex-col items-center justify-between h-full'>
+						<div>
+							<div
+								className='fc-event border-2   p-1 m-2 w-full rounded-md ml-auto flex justify-center items-center  text-center bg-white'
+								title='Тренировка'
+							>
+								Тренировка
+							</div>
+							<div
+								className='fc-event border-2   p-1 m-2 w-full rounded-md ml-auto flex justify-center items-center  text-center bg-white'
+								title='Учеба'
+							>
+								Учеба
+							</div>
+						</div>
+						<div>
+							<button
+								type='button'
+								className='text-gray-900 bg-gradient-to-r from-red-200 via-red-300 to-yellow-200 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-red-100 dark:focus:ring-red-400 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2'
+								onClick={() => {
+									setConfidenceVisibleBoolean(true)
+								}}
+							>
+								Генерация плана
+							</button>
+						</div>
 					</div>
 				</div>
 			</div>

@@ -129,7 +129,7 @@ export class StudentService {
 	public formatOne(student: Student) {
 		const subjectsData = student.getSubjectsData();
 		const subjects = subjectsData.reduce(
-			(subjects, { name, grades, attendances }) => ({
+			(subjects, { email, grades, attendances }) => ({
 				...subjects,
 				[email]: {
 					email,

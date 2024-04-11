@@ -52,3 +52,18 @@ body::-webkit-scrollbar-thumb {
 .fc-daygrid-event {
 	white-space: wrap !important;
 }
+
+#fc-dom-86 {
+	visibility: hidden;
+	position: relative;
+}
+
+#fc-dom-86:after {
+	visibility: visible;
+	position: absolute;
+	width: 350px;
+	text-align: center;
+	top: 0;
+	left: 0;
+	content: 'Heldent AI календарь';
+}

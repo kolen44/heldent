@@ -1,4 +1,4 @@
-import { IsDateString, IsNotEmpty, IsNumber, IsString } from 'class-validator';
+import { IsDateString, IsNotEmpty, IsString } from 'class-validator';
 
 export class CalendarUserDto {
 	@IsDateString()
@@ -9,7 +9,7 @@ export class CalendarUserDto {
 	@IsNotEmpty()
 	public readonly subject: string;
 
-	@IsNumber()
+	@IsString()
 	@IsNotEmpty()
-	public readonly curse: number;
+	public readonly goal: string;
 }

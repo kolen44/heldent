@@ -9,7 +9,7 @@ export const POST = async function handler(req) {
 			{
 				date: data.date,
 				subject: data.subject,
-				curse: data.curse,
+				goal: data.goal,
 			}
 		)
 		return new NextResponse(JSON.stringify(response.data), {
