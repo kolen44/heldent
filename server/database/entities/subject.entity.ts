@@ -25,10 +25,12 @@ export class Subject {
 	@UpdateDateColumn()
 	updateAt: Date;
 
-	@OneToMany(() => Grade, (grade) => grade.subject)
+	@OneToMany(() => Grade, (grade) => grade.subject, { cascade: true })
 	grades: Grade[];
 
-	@OneToMany(() => Attendance, (attendance) => attendance.subject)
+	@OneToMany(() => Attendance, (attendance) => attendance.subject, {
+		cascade: true,
+	})
 	attendances: Attendance[];
 
 	@ManyToMany(() => Student, (student) => student.subjects)

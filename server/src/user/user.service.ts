@@ -58,12 +58,12 @@ export class UserService {
 		return generateTextDto;
 	}
 
-	async findAll({ data }) {
-		const check = this.tokenService.checkByToken(data);
-		if (check) {
-			return 'proverka yes';
-		}
-	}
+	// 	async findAll({ data }) {
+	// 		const check = this.tokenService.checkByToken(data);
+	// 		if (check) {
+	// 			return 'proverka yes';
+	// 		}
+	// 	}
 
 	async createCalendar(data: CalendarUserDto) {
 		const chat = new Chat([
@@ -73,7 +73,7 @@ export class UserService {
 			},
 			{
 				role: YandexChatRole.USER,
-				text: `Я учусь на ${data.curse} курсе по прикладной ${data.subject} . Учитывая эти данные составь мне расписание на неделю что бы улучшить мои знания в ${data.subject} . Учитывай что сегодня ${data.date} Дай план на 5 дней. Верни только план в формате json`,
+				text: `Привет! Я обучаюсь на курсе по ${data.subject}. Учитывая это, можешь подсказать мне план на неделю, чтобы улучшить мои знания в этой области? Сегодня ${data.date}, и я хотел бы план на 5 дней. Помимо этого, буду благодарен за прикрепление ссылок на статьи, видео или любые материалы, которые помогут мне углубить знания в ${data.subject}. Верни, пожалуйста, только план в формате JSON.`,
 			},
 		]);
 

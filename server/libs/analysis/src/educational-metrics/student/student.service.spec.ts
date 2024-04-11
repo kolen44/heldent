@@ -36,7 +36,7 @@ describe('StudentService', () => {
 						grade: 58,
 					},
 				],
-				attendance: [
+				attendances: [
 					{ date: nowDate, attendance: 100 },
 					{
 						date: new Date(nowDate.getTime() + oneMonth),
@@ -69,7 +69,7 @@ describe('StudentService', () => {
 							grade: 58,
 						},
 					],
-					attendance: [
+					attendances: [
 						{ date: nowDate, attendance: 100 },
 						{
 							date: new Date(nowDate.getTime() + oneMonth),
@@ -124,7 +124,7 @@ describe('StudentService', () => {
 				Math: {
 					name: 'Math',
 					grades: [{ date, grade: 56 }],
-					attendance: [{ date, attendance: 100 }],
+					attendances: [{ date, attendance: 100 }],
 				},
 			},
 		});
@@ -134,7 +134,7 @@ describe('StudentService', () => {
 				Math: {
 					name: 'Math',
 					grades: [{ date, grade: 56 }],
-					attendance: [{ date, attendance: 100 }],
+					attendances: [{ date, attendance: 100 }],
 
 					performance: [{ date, performance: 60 }],
 					performanceIndex: 0.2,
