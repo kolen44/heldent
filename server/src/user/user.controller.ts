@@ -18,10 +18,10 @@ export class UserController {
 		return this.userService.create(createUserDto);
 	}
 
-	@Post('find-one')
+	@Post('aichecker')
 	@UsePipes(new ValidationPipe())
-	findOne(@Body() data: { id: number }) {
-		return this.userService.findOne(data.id);
+	AIChecker(@Body() data: { text: string }) {
+		return this.userService.AIChecker(data.text);
 	}
 
 	@Post('find-all')
@@ -34,5 +34,13 @@ export class UserController {
 	@UsePipes(new ValidationPipe())
 	getOne(@Body() data: { email: string }) {
 		return this.userService.findAll({ data });
+	}
+
+	@Post('calendar')
+	@UsePipes(new ValidationPipe())
+	createCalendar(
+		@Body() data: { data: string; subject: string; curse: number },
+	) {
+		return this.userService.createCalendar(data);
 	}
 }
