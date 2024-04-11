@@ -7,6 +7,7 @@ import { Student } from 'database/entities/student.entity';
 import { Subject } from 'database/entities/subject.entity';
 import { StudentController } from './student.controller';
 import { StudentService } from './student.service';
+import { AnalysisModule } from './analysis/analysis.module';
 
 @Module({
 	imports: [
@@ -15,6 +16,7 @@ import { StudentService } from './student.service';
 		TypeOrmModule.forFeature([Grade]),
 		TypeOrmModule.forFeature([Attendance]),
 		TokenModule,
+		AnalysisModule,
 	],
 	controllers: [StudentController],
 	providers: [StudentService],

@@ -141,14 +141,14 @@ export class StudentService {
 			{} as Record<string, CompletedSubject>,
 		);
 
-		const subjectsSortedByGrade = Object.values(subjects)
+		const subjectsSortedByPerformance = Object.values(subjects)
 			.sort((a, b) => b.performanceIndex - a.performanceIndex)
 			.map((subject) => ({
 				name: subject.name,
 				performanceIndex: subject.performanceIndex,
 			}));
 
-		return { subjects, subjectsSortedByGrade };
+		return { subjects, subjectsSortedByPerformance };
 	}
 
 	public formatMany(students: Student[]) {
