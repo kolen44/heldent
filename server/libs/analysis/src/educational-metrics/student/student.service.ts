@@ -129,10 +129,10 @@ export class StudentService {
 	public formatOne(student: Student) {
 		const subjectsData = student.getSubjectsData();
 		const subjects = subjectsData.reduce(
-			(subjects, { name, grades, attendance }) => ({
+			(subjects, { email, grades, attendance }) => ({
 				...subjects,
-				[name]: {
-					name,
+				[email]: {
+					email,
 					grades,
 					attendance,
 					...this.formatSubject({ grades, attendance }),

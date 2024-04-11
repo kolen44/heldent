@@ -1,6 +1,5 @@
 import { Student as StudentDB } from 'database/entities/student.entity';
 import { Student as StudentType } from '../types/student.type';
-import { Subject } from '../types/subject.type';
 
 export class Student {
 	constructor(public readonly student: StudentDB | StudentType) {
@@ -21,10 +20,10 @@ export class Student {
 		return this.student.name;
 	}
 
-	public getSubjectsData(): Subject[] {
+	public getSubjectsData() {
 		if (this.student instanceof StudentDB) {
 			const student = this.student.subjects.map((subject) => ({
-				name: subject.name,
+				email: subject.email,
 				grades: subject.grades.map((grade) => ({
 					date: grade.date,
 					grade: grade.grade * 10,

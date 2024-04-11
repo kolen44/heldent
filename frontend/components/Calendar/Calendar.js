@@ -53,10 +53,9 @@ export default function Calendar() {
 	}
 
 	function addEvent(data) {
-		console.log(data)
 		const event = {
 			...newEvent,
-			start: '2024-04-06',
+			start: data.date.toISOString(),
 			title: data.draggedEl.innerText,
 			allDay: data.allDay,
 			id: new Date().getTime(),
@@ -66,32 +65,33 @@ export default function Calendar() {
 		setAllEvents([...allEvents, event])
 	}
 
-	const ddd = [
-		{ title: 'pupsik6', data: '2024-04-06' },
-		{ title: 'pupsik7', data: '2024-04-07' },
-		{ title: 'pupsik8', data: '2024-04-08' },
-	]
-	async function addEvent1(data) {
-		console.log(data)
-		const events = []
-		ddd.forEach((el, number) => {
+	async function addCalendarPlan(data) {
+		const array = JSON.parse(data)
+		let id = 10
+		array.forEach((el, number) => {
 			const event = {
 				...allEvents,
 				start: el.data,
-				title: el.title,
+				title: el.plan,
 				allDay: true,
-				id: number,
+				id: id++,
 			}
 			events.push(event)
 		})
 		setAllEvents(events)
-		const text = await handlerSendGPTCalendar('Hi')
-		console.log(text)
 	}
 	useEffect(() => {
 		const timeoutId = setTimeout(() => {
-			// put your original hook code here
-			addEvent1(ddd)
+			async function createPlan() {
+				const today = new Date().toISOString().substring(0, 10)
+				const createPlanArray = await handlerSendGPTCalendar({
+					date: today,
+					subject: 'химии',
+					curse: 3,
+				})
+				await addCalendarPlan(createPlanArray)
+			}
+			createPlan()
 		}, 200)
 		return () => {
 			console.log('clearTimeout')
@@ -175,15 +175,18 @@ export default function Calendar() {
 						Переместите событие на календарь или создайте свое кликом по дню
 						календаря
 					</h1>
-					{events.map(event => (
-						<div
-							className='fc-event border-2   p-1 m-2 w-full rounded-md ml-auto flex justify-center items-center  text-center bg-white'
-							title={event.title}
-							key={event.id}
-						>
-							{event.title}
-						</div>
-					))}
+					<div
+						className='fc-event border-2   p-1 m-2 w-full rounded-md ml-auto flex justify-center items-center  text-center bg-white'
+						title='Тренировка'
+					>
+						Тренировка
+					</div>
+					<div
+						className='fc-event border-2   p-1 m-2 w-full rounded-md ml-auto flex justify-center items-center  text-center bg-white'
+						title='Учеба'
+					>
+						Учеба
+					</div>
 				</div>
 			</div>
 			<Transition.Root show={showDeleteModal} as={Fragment}>

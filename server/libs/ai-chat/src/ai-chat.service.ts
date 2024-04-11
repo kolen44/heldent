@@ -28,7 +28,7 @@ export class AiChatService {
 
 		const config = {
 			headers: {
-				Authorization: `Api-Key ${process.env.API_KEY}`,
+				Authorization: `Api-Key ${process.env.TOKEN_Yandex}`,
 				'x-folder-id': process.env.FOLDER_ID,
 			},
 		};

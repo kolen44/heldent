@@ -1,4 +1,5 @@
 import Abilities from '../../components/Abilities/Abilities'
+import Calendar from '../../components/Calendar/Calendar'
 import Footer from '../../components/Footer/Footer'
 import Course from '../../pages/Course/Course'
 import HeaderPage from '../../pages/Header/Header'
@@ -12,6 +13,7 @@ export default function Home() {
 			<Recommendations />
 			<Course />
 			<Footer />
+			<Calendar />
 		</div>
 	)
 }

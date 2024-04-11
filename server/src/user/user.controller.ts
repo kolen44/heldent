@@ -38,7 +38,6 @@ export class UserController {
 	}
 
 	@Post('calendar')
-	@UsePipes(new ValidationPipe())
 	createCalendar(@Body() data: CalendarUserDto) {
 		return this.userService.createCalendar(data);
 	}

@@ -17,7 +17,7 @@ export class Subject {
 	id: number;
 
 	@Column({ type: 'varchar', unique: true })
-	name: string;
+	email: string;
 
 	@CreateDateColumn()
 	createdAt: Date;

@@ -69,7 +69,7 @@ export class UserService {
 		const chat = new Chat([
 			{
 				role: YandexChatRole.SYSTEM,
-				text: `Отдай ответ в формате json в следующем формате. [{'data':'дата сегодня','plan':'план на сегодня'},{'data':'завтра','plan':'План на завтра'},  и так для следующих дней]. Кроме json ничего не возвращай.`,
+				text: `Отдай ответ в формате json в следующем формате. [{'data':'дата сегодня','plan':'план на сегодня'},{'data':'завтра','plan':'План на завтра'},  и так для следующих дней]. Кроме json ничего НЕ возвращай`,
 			},
 			{
 				role: YandexChatRole.USER,
@@ -84,15 +84,14 @@ export class UserService {
 			await this.aiChatService.generate(generateTextDto);
 
 		let text = chatWithAnswer.getLastMessage().text;
-
-		console.log(text);
-
 		if (text.includes('```json')) {
 			text = text.replace('```json', '').replace('```', '');
 		}
 
 		try {
-			return JSON.parse(text);
+			const s = await JSON.stringify(text);
+			console.log(text);
+			return s;
 		} catch (err) {
 			console.log('err', err);
 			return text;
