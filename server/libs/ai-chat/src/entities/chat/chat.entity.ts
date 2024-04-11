@@ -11,4 +11,13 @@ export class Chat {
 		this.chatData.push(data);
 		return this;
 	}
+
+	public getMessageIndex(index: number) {
+		if (index < 0 || index >= this.chatData.length) return undefined;
+		return this.chatData[index];
+	}
+
+	public getLastMessage() {
+		return this.chatData[this.chatData.length - 1];
+	}
 }

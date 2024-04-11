@@ -5,6 +5,7 @@ import {
 	UsePipes,
 	ValidationPipe,
 } from '@nestjs/common';
+import { CalendarUserDto } from './dto/calendar-user.dto';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UserService } from './user.service';
 
@@ -18,11 +19,12 @@ export class UserController {
 		return this.userService.create(createUserDto);
 	}
 
-	// @Post('find-one')
-	// @UsePipes(new ValidationPipe())
-	// findOne(@Body() data: { id: number }) {
-	// 	return this.userService.findOne(data.id);
-	// }
+
+	@Post('aichecker')
+	@UsePipes(new ValidationPipe())
+	AIChecker(@Body() data: { text: string }) {
+		return this.userService.AIChecker(data.text);
+	}
 
 	// @Post('find-all')
 	// @UsePipes(new ValidationPipe())
@@ -30,9 +32,15 @@ export class UserController {
 	// 	return this.userService.findAll(data);
 	// }
 
-	// @Post('find-all')
-	// @UsePipes(new ValidationPipe())
-	// getOne(@Body() data: { email: string }) {
-	// 	return this.userService.findAll({ data });
-	// }
+// 	@Post('find-all')
+// 	@UsePipes(new ValidationPipe())
+// 	getOne(@Body() data: { email: string }) {
+// 		return this.userService.findAll({ data });
+// 	}
+
+	@Post('calendar')
+	@UsePipes(new ValidationPipe())
+	createCalendar(@Body() data: CalendarUserDto) {
+		return this.userService.createCalendar(data);
+	}
 }

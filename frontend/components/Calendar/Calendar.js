@@ -6,6 +6,8 @@ import timeGridPlugin from '@fullcalendar/timegrid'
 import { Dialog, Transition } from '@headlessui/react'
 import { CheckIcon, ExclamationTriangleIcon } from '@heroicons/react/24/solid'
 import { Fragment, useEffect, useState } from 'react'
+import { ToastContainer } from 'react-toastify'
+import { handlerSendGPTCalendar } from '../../features/ChatGPTCalendar'
 
 export default function Calendar() {
 	const [events, setEvents] = useState([
@@ -17,6 +19,7 @@ export default function Calendar() {
 	const [showModal, setShowModal] = useState(false)
 	const [showDeleteModal, setDeleteShowModal] = useState(false)
 	const [idToDelete, setIdToDelete] = useState(null)
+	const [oneTimeRendering, setOneTimeRendering] = useState(true)
 	const [newEvent, setNewEvent] = useState({
 		title: '',
 		start: '',
@@ -53,14 +56,48 @@ export default function Calendar() {
 		console.log(data)
 		const event = {
 			...newEvent,
-			start: data.date.toISOString(),
+			start: '2024-04-06',
 			title: data.draggedEl.innerText,
 			allDay: data.allDay,
 			id: new Date().getTime(),
 		}
+		console.log(event)
 
 		setAllEvents([...allEvents, event])
 	}
+
+	const ddd = [
+		{ title: 'pupsik6', data: '2024-04-06' },
+		{ title: 'pupsik7', data: '2024-04-07' },
+		{ title: 'pupsik8', data: '2024-04-08' },
+	]
+	async function addEvent1(data) {
+		console.log(data)
+		const events = []
+		ddd.forEach((el, number) => {
+			const event = {
+				...allEvents,
+				start: el.data,
+				title: el.title,
+				allDay: true,
+				id: number,
+			}
+			events.push(event)
+		})
+		setAllEvents(events)
+		const text = await handlerSendGPTCalendar('Hi')
+		console.log(text)
+	}
+	useEffect(() => {
+		const timeoutId = setTimeout(() => {
+			// put your original hook code here
+			addEvent1(ddd)
+		}, 200)
+		return () => {
+			console.log('clearTimeout')
+			clearTimeout(timeoutId)
+		}
+	}, [])
 
 	function handleDeleteModal(data) {
 		setDeleteShowModal(true)
@@ -110,6 +147,7 @@ export default function Calendar() {
 	return (
 		<div className='bg-white flex flex-col min-h-screen  items-center justify-between p-24'>
 			<div className='grid grid-cols-10'>
+				<ToastContainer />
 				<div className='col-span-8'>
 					<FullCalendar
 						plugins={[dayGridPlugin, interactionPlugin, timeGridPlugin]}
@@ -139,7 +177,7 @@ export default function Calendar() {
 					</h1>
 					{events.map(event => (
 						<div
-							className='fc-event border-2 p-1 m-2 w-full rounded-md ml-auto flex justify-center items  text-center bg-white'
+							className='fc-event border-2   p-1 m-2 w-full rounded-md ml-auto flex justify-center items-center  text-center bg-white'
 							title={event.title}
 							key={event.id}
 						>
