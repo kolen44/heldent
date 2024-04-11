@@ -5,6 +5,7 @@ import {
 	UsePipes,
 	ValidationPipe,
 } from '@nestjs/common';
+import { CalendarUserDto } from './dto/calendar-user.dto';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UserService } from './user.service';
 
@@ -38,9 +39,7 @@ export class UserController {
 
 	@Post('calendar')
 	@UsePipes(new ValidationPipe())
-	createCalendar(
-		@Body() data: { data: string; subject: string; curse: number },
-	) {
+	createCalendar(@Body() data: CalendarUserDto) {
 		return this.userService.createCalendar(data);
 	}
 }
