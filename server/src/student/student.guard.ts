@@ -1,11 +1,18 @@
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { TokenService } from '../../libs/token/src/token.service';
+import { Student } from './entities/student.entity';
 
 // TODO перекинуть в auth/guards
 
 @Injectable()
 export class StudentGuard implements CanActivate {
-	constructor(private readonly tokenService: TokenService) {}
+	constructor(
+		@InjectRepository(Student)
+		private readonly studentRepository: Repository<Student>,
+		private readonly tokenService: TokenService,
+	) {}
 
 	public async canActivate(context: ExecutionContext): Promise<boolean> {
 		const request = context.switchToHttp().getRequest();
@@ -13,10 +20,16 @@ export class StudentGuard implements CanActivate {
 
 		const payload = await this.tokenService.decode(token);
 
-		if (!payload) return false;
+		if (!payload || !payload.id || !payload.email) return false;
 
-		console.log(payload);
+		const student = await this.studentRepository.findOne({
+			where: { id: payload.id, email: payload.email },
+		});
 
-		return !!token;
+		if (!student) return false;
+
+		request.student = student;
+
+		return true;
 	}
 }

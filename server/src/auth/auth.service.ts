@@ -10,7 +10,8 @@ import { RegisterUserDto } from './dto/register-user.dto';
 @Injectable()
 export class AuthService {
 	constructor(
-		@InjectRepository(Student) private userRepository: Repository<Student>,
+		@InjectRepository(Student)
+		private studentRepository: Repository<Student>,
 		private jwtService: JwtService,
 	) {}
 
@@ -41,7 +42,7 @@ export class AuthService {
 	public async login(loginUserDto: LoginUserDto) {
 		const { email, password } = loginUserDto;
 
-		const student = await this.userRepository.findOne({
+		const student = await this.studentRepository.findOne({
 			where: {
 				email,
 			},
@@ -66,7 +67,7 @@ export class AuthService {
 	public async register(registerUserDto: RegisterUserDto) {
 		const { email, password } = registerUserDto;
 
-		const student = await this.userRepository.findOne({
+		const student = await this.studentRepository.findOne({
 			where: { email },
 		});
 
@@ -77,7 +78,7 @@ export class AuthService {
 
 		const hashedPassword = await bcrypt.hash(password, 10);
 
-		const newStudent = await this.userRepository.save({
+		const newStudent = await this.studentRepository.save({
 			email,
 			password: hashedPassword,
 		});
