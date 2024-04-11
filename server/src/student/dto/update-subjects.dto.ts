@@ -37,5 +37,5 @@ export class UpdateSubjectDto {
 	@IsOptional()
 	@ValidateNested({ each: true })
 	@Type(() => UpdateAttendanceDto)
-	attendance?: UpdateAttendanceDto[];
+	attendances?: UpdateAttendanceDto[];
 }

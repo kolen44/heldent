@@ -116,7 +116,7 @@ export class StudentService {
 				'Subject not found in student subjects',
 			);
 
-		const { grades, attendance } = updateSubjectsDto;
+		const { grades, attendances } = updateSubjectsDto;
 
 		// Добавление Оценок
 		if (grades?.length) {
@@ -134,9 +134,9 @@ export class StudentService {
 		}
 
 		// Добавление Посещаемости
-		if (attendance?.length) {
+		if (attendances?.length) {
 			const newAttendance = this.attendanceRepository.create(
-				attendance.map(({ date, attendance }) => ({
+				attendances.map(({ date, attendance }) => ({
 					attendance,
 					date: new Date(date),
 					student: studentWithSubjects,

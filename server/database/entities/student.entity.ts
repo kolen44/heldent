@@ -35,7 +35,7 @@ export class Student {
 	@OneToMany(() => Attendance, (attendance) => attendance.student, {
 		cascade: true,
 	})
-	attendance: Attendance[];
+	attendances: Attendance[];
 
 	@ManyToMany(() => Subject, (subject) => subject.students)
 	@JoinTable()
