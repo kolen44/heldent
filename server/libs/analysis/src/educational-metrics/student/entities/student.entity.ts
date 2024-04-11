@@ -8,7 +8,7 @@ export class Student {
 			this.student instanceof StudentDB &&
 			!this.student.subjects &&
 			!this.student.grades &&
-			!this.student.attendance
+			!this.student.attendances
 		)
 			throw new Error('Subject, grades and attendances is required');
 	}
@@ -29,7 +29,7 @@ export class Student {
 					date: grade.date,
 					grade: grade.grade * 10,
 				})),
-				attendance: subject.attendances.map((attendance) => ({
+				attendances: subject.attendances.map((attendance) => ({
 					date: attendance.date,
 					attendance: attendance.attendance ? 100 : 0,
 				})),
@@ -41,7 +41,7 @@ export class Student {
 		return Object.entries(this.student.subjects).map(([, subject]) => ({
 			name: subject.name,
 			grades: subject.grades,
-			attendance: subject.attendance,
+			attendances: subject.attendances,
 		}));
 	}
 }

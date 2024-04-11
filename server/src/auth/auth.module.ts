@@ -1,3 +1,4 @@
+import { TokenModule } from '@app/token';
 import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
@@ -10,6 +11,7 @@ import { LocalStrategies } from './strategies/local.strategies';
 
 @Module({
 	imports: [
+		TokenModule,
 		PassportModule,
 		TypeOrmModule.forFeature([Student]),
 		JwtModule.register({

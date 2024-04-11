@@ -19,23 +19,24 @@ export class UserController {
 		return this.userService.create(createUserDto);
 	}
 
+
 	@Post('aichecker')
 	@UsePipes(new ValidationPipe())
 	AIChecker(@Body() data: { text: string }) {
 		return this.userService.AIChecker(data.text);
 	}
 
-	@Post('find-all')
-	@UsePipes(new ValidationPipe())
-	findAll(@Body() data: { data: string }) {
-		return this.userService.findAll(data);
-	}
+	// @Post('find-all')
+	// @UsePipes(new ValidationPipe())
+	// findAll(@Body() data: { data: string }) {
+	// 	return this.userService.findAll(data);
+	// }
 
-	@Post('find-all')
-	@UsePipes(new ValidationPipe())
-	getOne(@Body() data: { email: string }) {
-		return this.userService.findAll({ data });
-	}
+// 	@Post('find-all')
+// 	@UsePipes(new ValidationPipe())
+// 	getOne(@Body() data: { email: string }) {
+// 		return this.userService.findAll({ data });
+// 	}
 
 	@Post('calendar')
 	@UsePipes(new ValidationPipe())

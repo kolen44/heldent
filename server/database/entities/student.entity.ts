@@ -29,11 +29,13 @@ export class Student {
 	@UpdateDateColumn()
 	updateAt: Date;
 
-	@OneToMany(() => Grade, (grade) => grade.student)
+	@OneToMany(() => Grade, (grade) => grade.student, { cascade: true })
 	grades: Grade[];
 
-	@OneToMany(() => Attendance, (attendance) => attendance.student)
-	attendance: Attendance[];
+	@OneToMany(() => Attendance, (attendance) => attendance.student, {
+		cascade: true,
+	})
+	attendances: Attendance[];
 
 	@ManyToMany(() => Subject, (subject) => subject.students)
 	@JoinTable()

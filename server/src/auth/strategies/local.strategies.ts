@@ -8,8 +8,8 @@ export class LocalStrategies extends PassportStrategy(Strategy) {
 	constructor(private authService: AuthService) {
 		super({ usernameField: 'email' });
 	}
-	async validate(data) {
-		const user = await this.authService.validateUser(data);
-		return user;
-	}
+	// async validate(data) {
+	// 	const user = await this.authService.validateUser(data);
+	// 	return user;
+	// }
 }

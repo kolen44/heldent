@@ -48,6 +48,7 @@ export class UserService {
 		return { user };
 	}
 
+
 	async AIChecker(text: string) {
 		const chat = new Chat({
 			role: YandexChatRole.USER,
@@ -58,12 +59,12 @@ export class UserService {
 		return generateTextDto;
 	}
 
-	async findAll({ data }) {
-		const check = this.tokenService.checkByToken(data);
-		if (check) {
-			return 'proverka yes';
-		}
-	}
+// 	async findAll({ data }) {
+// 		const check = this.tokenService.checkByToken(data);
+// 		if (check) {
+// 			return 'proverka yes';
+// 		}
+// 	}
 
 	async createCalendar(data: CalendarUserDto) {
 		const chat = new Chat([

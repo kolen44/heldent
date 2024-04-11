@@ -40,16 +40,16 @@ export class StudentService {
 	// Функция создаёт массив, в котором каждое число это средняя посещаемость за месяц
 	// То есть за 2 месяца будет массив из двух элементов
 	private getMeanAttendanceInMonth(
-		attendance: Subject['attendance'],
-	): Subject['attendance'] {
-		let lastDate = new Date(attendance[attendance.length - 1].date);
+		attendances: Subject['attendances'],
+	): Subject['attendances'] {
+		let lastDate = new Date(attendances[attendances.length - 1].date);
 
 		const getStableObject = (date: Date, stableAttendance: number) => ({
 			date,
-			attendance: [stableAttendance],
+			attendances: [stableAttendance],
 		});
 
-		return attendance
+		return attendances
 			.reduce(
 				(acc, val) => {
 					const date = new Date(val.date);
@@ -64,28 +64,28 @@ export class StudentService {
 						lastDate = date;
 						acc.push(getStableObject(date, stableAttendance));
 					} else {
-						acc[acc.length - 1].attendance.push(stableAttendance);
+						acc[acc.length - 1].attendances.push(stableAttendance);
 					}
 
 					return acc;
 				},
-				[] as { date: Date; attendance: number[] }[],
+				[] as { date: Date; attendances: number[] }[],
 			)
 			.map((item) => ({
 				...item,
 				attendance: Math.round(
-					item.attendance.reduce((acc, val) => acc + val, 0) /
-						item.attendance.length,
+					item.attendances.reduce((acc, val) => acc + val, 0) /
+						item.attendances.length,
 				),
 			}));
 	}
 
 	// Функция переводит оценки + посещаемость в успеваемость.
 	// 1 к 1: оценки к успеваемости, а посещаемость берётся средняя за месяц
-	private getPerformance(subject: Pick<Subject, 'grades' | 'attendance'>) {
+	private getPerformance(subject: Pick<Subject, 'grades' | 'attendances'>) {
 		let lastIndex = 0;
 		const attendanceMean = this.getMeanAttendanceInMonth(
-			subject.attendance,
+			subject.attendances,
 		);
 
 		return subject.grades.map(({ date, grade }) => {
@@ -106,7 +106,7 @@ export class StudentService {
 
 	// Функция высчитывает успеваемость по предмету в виде массива
 	// И вычисляет среднюю успеваемость в виде от -1 до 1
-	private formatSubject(subject: Pick<Subject, 'grades' | 'attendance'>) {
+	private formatSubject(subject: Pick<Subject, 'grades' | 'attendances'>) {
 		const decimalPlaces = 5; // Количество знаков после запятой
 		const roundingFactor = 10 ** decimalPlaces;
 
@@ -129,26 +129,26 @@ export class StudentService {
 	public formatOne(student: Student) {
 		const subjectsData = student.getSubjectsData();
 		const subjects = subjectsData.reduce(
-			(subjects, { name, grades, attendance }) => ({
+			(subjects, { name, grades, attendances }) => ({
 				...subjects,
 				[name]: {
 					name,
 					grades,
-					attendance,
-					...this.formatSubject({ grades, attendance }),
+					attendances,
+					...this.formatSubject({ grades, attendances }),
 				},
 			}),
 			{} as Record<string, CompletedSubject>,
 		);
 
-		const subjectsSortedByGrade = Object.values(subjects)
+		const subjectsSortedByPerformance = Object.values(subjects)
 			.sort((a, b) => b.performanceIndex - a.performanceIndex)
 			.map((subject) => ({
 				name: subject.name,
 				performanceIndex: subject.performanceIndex,
 			}));
 
-		return { subjects, subjectsSortedByGrade };
+		return { subjects, subjectsSortedByPerformance };
 	}
 
 	public formatMany(students: Student[]) {
