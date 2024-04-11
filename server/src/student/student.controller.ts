@@ -4,45 +4,58 @@ import {
 	Delete,
 	Get,
 	Param,
-	Patch,
+	Post,
 	Req,
 	UseGuards,
 } from '@nestjs/common';
-import { UpdateStudentDto } from './dto/update-student.dto';
-import { StudentGuard } from './student.guard';
+import { Student } from 'database/entities/student.entity';
+import { StudentGuard } from '../auth/guards/student.guard';
+import { AddSubjectDto } from './dto/add-subject.dto';
+import { UpdateSubjectDto } from './dto/update-subjects.dto';
 import { StudentService } from './student.service';
 
 @Controller('student')
 export class StudentController {
 	constructor(private readonly studentService: StudentService) {}
 
-	// @Get()
-	// findMany() {
-	// 	return this.studentService.findAll();
-	// }
-
-	@Get(':id')
-	findOne(@Param('id') id: string) {
-		return this.studentService.findOne(+id);
-	}
-
 	@Get()
 	@UseGuards(StudentGuard)
-	getAccount(@Req() req: Request) {
-		// console.log(req);
-		// return this.studentService.findOne(+id);
+	public async getAccount(@Req() req: Request & { student: Student }) {
+		return this.studentService.getAccount(req.student);
 	}
 
-	@Patch(':id')
-	update(
-		@Param('id') id: string,
-		@Body() updateStudentDto: UpdateStudentDto,
+	// Добавить предмет к студенту
+	@Post('subject')
+	@UseGuards(StudentGuard)
+	public async addSubject(
+		@Body() addSubjectDto: AddSubjectDto,
+		@Req() req: Request & { student: Student },
 	) {
-		return this.studentService.update(+id, updateStudentDto);
+		return this.studentService.addSubject(addSubjectDto, req.student);
 	}
 
-	@Delete(':id')
-	remove(@Param('id') id: string) {
-		return this.studentService.remove(+id);
+	// Удалить предмет у студента
+	@Delete('subject/:subjectId')
+	@UseGuards(StudentGuard)
+	public async deleteSubject(
+		@Param('subjectId') subjectId: number,
+		@Req() req: Request & { student: Student },
+	) {
+		return this.studentService.deleteSubject(subjectId, req.student);
+	}
+
+	// Добавить оценки/посещаемость студента к предмету
+	@Post('subject/:subjectId')
+	@UseGuards(StudentGuard)
+	public async updateSubjects(
+		@Param('subjectId') subjectId: number,
+		@Body() updateSubjectDto: UpdateSubjectDto,
+		@Req() req: Request & { student: Student },
+	) {
+		return this.studentService.updateSubjects(
+			+subjectId,
+			updateSubjectDto,
+			req.student,
+		);
 	}
 }

@@ -1,10 +1,8 @@
 import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { TokenService } from '../../libs/token/src/token.service';
-import { Student } from './entities/student.entity';
-
-// TODO перекинуть в auth/guards
+import { TokenService } from '../../../libs/token/src/token.service';
+import { Student } from '../../student/entities/student.entity';
 
 @Injectable()
 export class StudentGuard implements CanActivate {
