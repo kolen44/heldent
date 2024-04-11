@@ -1,6 +1,7 @@
 import {
 	Body,
 	Controller,
+	Get,
 	Post,
 	UsePipes,
 	ValidationPipe,
@@ -19,7 +20,6 @@ export class UserController {
 		return this.userService.create(createUserDto);
 	}
 
-
 	@Post('aichecker')
 	@UsePipes(new ValidationPipe())
 	AIChecker(@Body() data: { text: string }) {
@@ -32,13 +32,13 @@ export class UserController {
 	// 	return this.userService.findAll(data);
 	// }
 
-// 	@Post('find-all')
-// 	@UsePipes(new ValidationPipe())
-// 	getOne(@Body() data: { email: string }) {
-// 		return this.userService.findAll({ data });
-// 	}
+	// 	@Post('find-all')
+	// 	@UsePipes(new ValidationPipe())
+	// 	getOne(@Body() data: { email: string }) {
+	// 		return this.userService.findAll({ data });
+	// 	}
 
-	@Post('calendar')
+	@Get('calendar')
 	@UsePipes(new ValidationPipe())
 	createCalendar(@Body() data: CalendarUserDto) {
 		return this.userService.createCalendar(data);
