@@ -6,8 +6,8 @@ import { AttendanceModule } from './attendance/attendance.module';
 import { SubjectModule } from './subject/subject.module';
 
 @Module({
-  providers: [DatabaseService],
-  exports: [DatabaseService],
-  imports: [StudentModule, GradeModule, AttendanceModule, SubjectModule],
+	providers: [DatabaseService],
+	exports: [DatabaseService],
+	imports: [StudentModule, GradeModule, AttendanceModule, SubjectModule],
 })
 export class DatabaseModule {}

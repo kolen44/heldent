@@ -1,26 +1,34 @@
 import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Subject } from 'database/entities/subject.entity';
+import { Repository } from 'typeorm';
 import { CreateSubjectDto } from './dto/create-subject.dto';
 import { UpdateSubjectDto } from './dto/update-subject.dto';
 
 @Injectable()
 export class SubjectService {
-  create(createSubjectDto: CreateSubjectDto) {
-    return 'This action adds a new subject';
-  }
+	constructor(
+		@InjectRepository(Subject)
+		private readonly subjectRepository: Repository<Subject>,
+	) {}
 
-  findAll() {
-    return `This action returns all subject`;
-  }
+	create(createSubjectDto: CreateSubjectDto) {
+		this.subjectRepository.create(createSubjectDto);
+	}
 
-  findOne(id: number) {
-    return `This action returns a #${id} subject`;
-  }
+	findAll() {
+		return `This action returns all subject`;
+	}
 
-  update(id: number, updateSubjectDto: UpdateSubjectDto) {
-    return `This action updates a #${id} subject`;
-  }
+	findOne(id: number) {
+		return `This action returns a #${id} subject`;
+	}
 
-  remove(id: number) {
-    return `This action removes a #${id} subject`;
-  }
+	update(id: number, updateSubjectDto: UpdateSubjectDto) {
+		return `This action updates a #${id} subject`;
+	}
+
+	remove(id: number) {
+		return `This action removes a #${id} subject`;
+	}
 }
