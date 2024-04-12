@@ -21,6 +21,7 @@ export default function ChangeStatisticPageButton({ text }) {
 				boxShadow: '0 0 10px rgba(80, 75, 95, 0.5)',
 				backdropFilter: 'blur(5px)',
 				padding: '15px',
+				minWidth: '220px',
 			}}
 			onClick={handleButtonClick}
 		>

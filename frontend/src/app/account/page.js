@@ -9,10 +9,10 @@ export default function Account() {
 	const Component = SelectedComponent(pageNumber)
 	return (
 		<div className='bg-[#0A062A] max-h-screen overflow-hidden'>
-			<div className='grid grid-cols-10 h-screen w-screen p-20 pr-28 pl-7 text-white bg-[url(/image.webp)] bg-no-repeat bg-cover'>
-				<div className='col-span-2 '>
+			<div className='grid grid-cols-10 h-screen w-screen xl:p-20 xl:pr-28 xl:pl-7 text-white bg-[url(/image.webp)] bg-no-repeat bg-cover '>
+				<div className='col-span-2 hidden xl:flex justify-center'>
 					<div className='text-md pt-10 text-5xl text-center'>Heldent</div>
-					<div className='text-xl h-full flex items-center justify-center'>
+					<div className='text-xl h-full flex items-center justify-center fixed '>
 						<div className='flex flex-col gap-10'>
 							<div onClick={() => setPageNumber(1)}>
 								<ChangeStatisticPageButton text={'Личный кабинет'} />
@@ -27,7 +27,7 @@ export default function Account() {
 						</div>
 					</div>
 				</div>
-				<div className='bg-[#0A062A] h-full col-span-8 rounded-xl backdrop-blur-md'>
+				<div className='bg-[#0A062A] h-full  w-screen xl:w-fit col-span-8 rounded-xl backdrop-blur-md '>
 					<Suspense fallback={<div>Loading...</div>}>
 						<Component />
 					</Suspense>
@@ -38,6 +38,9 @@ export default function Account() {
 }
 
 function SelectedComponent(number) {
+	const componentAccount = dynamic(() =>
+		import('@components/PersonalAccount/Account/Account')
+	)
 	const componentStatistic = dynamic(() =>
 		import('@components/PersonalAccount/Statistic/Statistic')
 	)
@@ -46,7 +49,7 @@ function SelectedComponent(number) {
 	)
 
 	const componentsMap = {
-		1: componentStatistic,
+		1: componentAccount,
 		2: componentStatistic,
 		3: componentCalendar,
 	}
