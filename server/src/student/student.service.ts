@@ -187,11 +187,11 @@ export class StudentService {
 		const chat = new Chat([
 			{
 				role: YandexChatRole.SYSTEM,
-				text: 'Информация о вузе:' + '\n' + dataAboutUniversity,
+				text: 'Вот данные для контекста:' + '\n' + dataAboutUniversity,
 			},
 			{
 				role: YandexChatRole.SYSTEM,
-				text: 'Ты ассистент для вуза, ты должен отвечать студентам на их вопросы, основываясь на данных о вузе.',
+				text: 'Ты ассистент для вуза, отвечай студентам на их вопросы, основываясь на данных о вузе, отвечай в разговорной форме, как будто ты на одной волне со студентами. Отвечай так, будто ты представляешь этот вуз. Не забывай о том, что тебя могут спрашивать первокурсники, говори всё доходчиво, что бы каждый тебя понял. Если есть возможность рассказать про какой-нибудь мастер-класс или курс, обязательно скажи про него, если это уместно.',
 			},
 			{
 				role: YandexChatRole.USER,
@@ -201,7 +201,7 @@ export class StudentService {
 
 		await this.aiChatService.generate(new GenerateTextDto(chat));
 
-		console.log(chat);
+		// console.log(chat);
 
 		return chat.getLastMessage();
 	}
