@@ -18,6 +18,8 @@
     "@analysis/analysis/(.*)": "<rootDir>/../libs/analysis/src/$1",
     "@analysis/analysis": "<rootDir>/../libs/analysis/src",
     "Y/parser/(.*)": "<rootDir>/../libs/parser/src/$1",
-    "Y/parser": "<rootDir>/../libs/parser/src"
+    "Y/parser": "<rootDir>/../libs/parser/src",
+    "@database/database/(.*)": "<rootDir>/../libs/database/src/$1",
+    "@database/database": "<rootDir>/../libs/database/src"
   }
 }

@@ -42,6 +42,12 @@
       ],
       "Y/parser/*": [
         "libs/parser/src/*"
+      ],
+      "@database/database": [
+        "libs/database/src"
+      ],
+      "@database/database/*": [
+        "libs/database/src/*"
       ]
     }
   }
