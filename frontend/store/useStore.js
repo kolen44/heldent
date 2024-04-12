@@ -7,4 +7,5 @@ export const useStores = create((set, get) => ({
 			calendarPlan: text,
 		}))
 	},
+	personalAccountDynamicPage: 1,
 }))

@@ -142,7 +142,7 @@ export default function Calendar() {
 	}
 
 	return (
-		<div className='bg-white flex flex-col min-h-screen  items-center justify-between p-24'>
+		<div className='bg-[#0A062A] flex flex-col   items-center justify-between p-24 rounded-xl backdrop-blur-md'>
 			<div className='grid grid-cols-10'>
 				<ToastContainer />
 				<div className='col-span-8'>
@@ -168,13 +168,13 @@ export default function Calendar() {
 				</div>
 				<div
 					id='draggable-el'
-					className='ml-8 w-full border-2 p-2 mt-16 rounded-md lg:h-1/2 bg-violet-500'
+					className='ml-8 w-full border-2 p-2 mt-16 rounded-md lg:h-1/2 bg-violet-500 '
 				>
 					<h1 className='font-thin text-sm text-center'>
 						Переместите событие на календарь или создайте свое кликом по дню
 						календаря
 					</h1>
-					<div className='flex flex-col items-center justify-between h-full'>
+					<div className='flex flex-col items-center justify-between h-full text-black px-10'>
 						<div>
 							<div
 								className='fc-event border-2   p-1 m-2 w-full rounded-md ml-auto flex justify-center items-center  text-center bg-white'
