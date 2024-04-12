@@ -1,5 +1,5 @@
+import { TokenService } from '@app/token';
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import * as bcrypt from 'bcrypt';
 import { Student } from 'database/entities/student.entity';
@@ -12,30 +12,14 @@ export class AuthService {
 	constructor(
 		@InjectRepository(Student)
 		private studentRepository: Repository<Student>,
-		private jwtService: JwtService,
+		private tokenService: TokenService,
 	) {}
 
-	// TODO удалить
-	// async validateUser({ email, password }: LoginAuthDto) {
-	// 	const existUser = await this.userRepository.findOne({
-	// 		where: {
-	// 			email,
-	// 			password,
-	// 		},
-	// 	});
-	// 	if (existUser) {
-	// 		// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	// 		const { password, ...userData } = existUser;
-	// 		return this.jwtService.sign(userData);
-	// 	} else {
-	// 		throw new UnauthorizedException(
-	// 			'Пользователь с такими данными не найден. Внимательно проверьте почту и пароль!',
-	// 		);
-	// 	}
-	// }
-
-	private generateToken(student: Student) {
-		const token = this.jwtService.sign({ ...student, password: undefined });
+	private async generateToken(student: Student) {
+		const token = await this.tokenService.sign({
+			...student,
+			password: undefined,
+		});
 		return { token };
 	}
 
@@ -43,9 +27,7 @@ export class AuthService {
 		const { email, password } = loginUserDto;
 
 		const student = await this.studentRepository.findOne({
-			where: {
-				email,
-			},
+			where: { email },
 		});
 
 		if (!student)
@@ -61,7 +43,7 @@ export class AuthService {
 		if (!isPasswordValid)
 			throw new BadRequestException('Неверный логин или пароль');
 
-		return this.generateToken(student);
+		return await this.generateToken(student);
 	}
 
 	public async register(registerUserDto: RegisterUserDto) {
@@ -83,6 +65,6 @@ export class AuthService {
 			password: hashedPassword,
 		});
 
-		return this.generateToken(newStudent);
+		return await this.generateToken(newStudent);
 	}
 }

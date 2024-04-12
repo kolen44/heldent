@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
+import { error } from 'console';
 
 @Injectable()
 export class TokenService {
@@ -10,6 +11,11 @@ export class TokenService {
 	}
 
 	async decode(token: string) {
-		return await this.jwtService.decode(token);
+		try {
+			return await this.jwtService.decode(token);
+		} catch {
+			console.error('An error occurred while decoding the token:', error);
+			return null;
+		}
 	}
 }
