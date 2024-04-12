@@ -65,7 +65,7 @@ export class StudentService {
 
 		await this.studentRepository.save(studentWithSubjects);
 
-		return this.formatStudent(studentWithSubjects);
+		return subject; // this.formatStudent(studentWithSubjects);
 	}
 
 	// Удаление предмета у студента
@@ -77,6 +77,7 @@ export class StudentService {
 
 		const subject = await this.subjectRepository.findOne({
 			where: { id: subjectId },
+			relations: ['grades.student', 'attendances.student'],
 		});
 
 		const hasSubjectInStudent = studentWithSubjects.subjects.find(
@@ -86,13 +87,28 @@ export class StudentService {
 		if (!hasSubjectInStudent)
 			throw new BadRequestException('Subject not found');
 
+		console.log(subject);
+		const gradesForRemove = subject.grades?.filter(
+			(grade) => grade.student.id === student.id,
+		);
+
+		const attendancesForRemove = subject.attendances?.filter(
+			(attendance) => attendance.student.id === student.id,
+		);
+
+		if (subject.grades && subject.grades.length)
+			await this.gradeRepository.remove(gradesForRemove);
+
+		if (subject.attendances && subject.attendances.length)
+			await this.attendanceRepository.remove(attendancesForRemove);
+
 		studentWithSubjects.subjects = studentWithSubjects.subjects.filter(
 			(studentSubject) => studentSubject.id !== subject.id,
 		);
 
 		await this.studentRepository.save(studentWithSubjects);
 
-		return this.formatStudent(studentWithSubjects);
+		return this.formatSubject(subject); // this.formatStudent(studentWithSubjects);
 	}
 
 	// Добавление оценок/посещаемости к предмету
@@ -151,29 +167,32 @@ export class StudentService {
 		await this.studentRepository.save(studentWithSubjects);
 
 		// Возвращаем студента с обновленными данными
-		return this.formatStudent(studentWithSubjects);
+		return this.formatSubject(subject); // this.formatStudent(studentWithSubjects);
 	}
 
 	// TODO можно куда то вынести, к примеру сервис formatStudent или типо того
 	private formatStudent(student: Student) {
 		return {
 			...student,
-			subjects: student.subjects?.map((subject) => ({
-				...subject,
-				grades: subject.grades?.map(({ id, date, grade }) => ({
-					id,
-					date,
-					grade,
-				})),
-				attendances: subject.attendances?.map(
-					({ id, date, attendance }) => ({
-						id,
-						date,
-						attendance,
-					}),
-				),
-			})),
+			subjects: student.subjects?.map((subject) =>
+				this.formatSubject(subject),
+			),
 			password: undefined,
+		};
+	}
+
+	// TODO и этот тоже вместе с formatStudent
+	private formatSubject(subject: Subject) {
+		return {
+			...subject,
+			grades: subject.grades?.map(({ id, date, grade }) => ({
+				id,
+				date,
+				grade,
+			})),
+			attendances: subject.attendances?.map(
+				({ id, date, attendance }) => ({ id, date, attendance }),
+			),
 		};
 	}
 }
