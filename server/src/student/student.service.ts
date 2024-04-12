@@ -1,11 +1,17 @@
+import { GenerateTextDto } from '@ai-chat/ai-chat/dto/generate-text.dto';
+import { Chat } from '@ai-chat/ai-chat/entities/chat/chat.entity';
+import { YandexChatRole } from '@ai-chat/ai-chat/types/yandex.type';
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Attendance } from 'database/entities/attendance.entity';
 import { Grade } from 'database/entities/grade.entity';
 import { Student } from 'database/entities/student.entity';
 import { Subject } from 'database/entities/subject.entity';
+import { readFileSync } from 'fs';
 import { Repository } from 'typeorm';
+import { AiChatService } from '../../libs/ai-chat/src/ai-chat.service';
 import { AddSubjectDto } from './dto/add-subject.dto';
+import { AskAssistantDto } from './dto/ask-assistant.dto';
 import { UpdateSubjectDto } from './dto/update-subjects.dto';
 
 @Injectable()
@@ -22,6 +28,8 @@ export class StudentService {
 
 		@InjectRepository(Attendance)
 		private readonly attendanceRepository: Repository<Attendance>,
+
+		private aiChatService: AiChatService,
 	) {}
 
 	// Получение аккаунта студента
@@ -168,6 +176,34 @@ export class StudentService {
 
 		// Возвращаем студента с обновленными данными
 		return this.formatSubject(subject); // this.formatStudent(studentWithSubjects);
+	}
+
+	public async askAssistant(askAssistantDto: AskAssistantDto) {
+		const dataAboutUniversity = readFileSync(
+			'../data-about-university.txt',
+			'utf8',
+		);
+
+		const chat = new Chat([
+			{
+				role: YandexChatRole.SYSTEM,
+				text: 'Информация о вузе:' + '\n' + dataAboutUniversity,
+			},
+			{
+				role: YandexChatRole.SYSTEM,
+				text: 'Ты ассистент для вуза, ты должен отвечать студентам на их вопросы, основываясь на данных о вузе.',
+			},
+			{
+				role: YandexChatRole.USER,
+				text: askAssistantDto.question,
+			},
+		]);
+
+		await this.aiChatService.generate(new GenerateTextDto(chat));
+
+		console.log(chat);
+
+		return chat.getLastMessage();
 	}
 
 	// TODO можно куда то вынести, к примеру сервис formatStudent или типо того

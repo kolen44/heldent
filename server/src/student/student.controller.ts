@@ -11,6 +11,7 @@ import {
 import { Student } from 'database/entities/student.entity';
 import { StudentGuard } from '../auth/guards/student.guard';
 import { AddSubjectDto } from './dto/add-subject.dto';
+import { AskAssistantDto } from './dto/ask-assistant.dto';
 import { UpdateSubjectDto } from './dto/update-subjects.dto';
 import { StudentService } from './student.service';
 
@@ -57,5 +58,13 @@ export class StudentController {
 			updateSubjectDto,
 			req.student,
 		);
+	}
+
+	@Get('assistant')
+	public async askAssistant(
+		@Req() req: Request & { student: Student },
+		@Body() question: AskAssistantDto,
+	) {
+		return this.studentService.askAssistant(question);
 	}
 }
