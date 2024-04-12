@@ -44,111 +44,124 @@ export class StudentService {
 	): Subject['attendances'] {
 		let lastDate = new Date(attendances[attendances.length - 1].date);
 
-		const getStableObject = (date: Date, stableAttendance: number) => ({
+		const getNewMonthObject = (date: Date, stableAttendance: number) => ({
 			date,
 			attendances: [stableAttendance],
 		});
 
-		return attendances
-			.reduce(
-				(acc, val) => {
-					const date = new Date(val.date);
-					const stableAttendance = this.stableAttendance(
-						val.attendance,
-					);
+		const isMonthEqualToLastDate = (date: Date) =>
+			date.getMonth() === lastDate.getMonth();
 
-					if (
-						date.getMonth() !== lastDate.getMonth() ||
-						!acc.length
-					) {
-						lastDate = date;
-						acc.push(getStableObject(date, stableAttendance));
-					} else {
-						acc[acc.length - 1].attendances.push(stableAttendance);
-					}
+		const attendancesSortedByMonth: {
+			date: Date;
+			attendances: number[];
+		}[] = [];
 
-					return acc;
-				},
-				[] as { date: Date; attendances: number[] }[],
-			)
-			.map((item) => ({
-				...item,
-				attendance: Math.round(
-					item.attendances.reduce((acc, val) => acc + val, 0) /
-						item.attendances.length,
-				),
-			}));
+		for (let i = 0; i < attendances.length; i++) {
+			const val = attendances[i];
+			const date = new Date(val.date);
+			const stableAttendance = this.stableAttendance(+val.attendance);
+
+			// REVIEW START
+			if (
+				!isMonthEqualToLastDate(date) ||
+				!attendancesSortedByMonth.length
+			) {
+				lastDate = date;
+				attendancesSortedByMonth.push(
+					getNewMonthObject(date, stableAttendance),
+				);
+			} else {
+				attendancesSortedByMonth[
+					attendancesSortedByMonth.length - 1
+				].attendances.push(stableAttendance);
+			}
+			// REVIEW END
+		}
+
+		console.log(attendancesSortedByMonth);
+
+		const calculateAverage = (item: number[]) =>
+			Math.round(item.reduce((acc, val) => acc + val, 0) / item.length);
+
+		return attendancesSortedByMonth.map(({ date, attendances }) => ({
+			date,
+			attendance: calculateAverage(attendances),
+		}));
 	}
 
-	// Функция переводит оценки + посещаемость в успеваемость.
-	// 1 к 1: оценки к успеваемости, а посещаемость берётся средняя за месяц
-	private getPerformance(subject: Pick<Subject, 'grades' | 'attendances'>) {
-		let lastIndex = 0;
-		const attendanceMean = this.getMeanAttendanceInMonth(
-			subject.attendances,
-		);
+	// Функция высчитывает успеваемость по предмету
+	private calculatePerformances(
+		subject: Pick<Subject, 'grades' | 'attendances'>,
+	) {
+		const { grades, attendances } = subject;
+		const processedPerformances: { date: Date; performance: number }[] = [];
+		let monthIndex = 0;
 
-		return subject.grades.map(({ date, grade }) => {
-			const attendanceItem = attendanceMean[lastIndex];
+		const meanAttendanceInMonth =
+			this.getMeanAttendanceInMonth(attendances);
 
-			if (attendanceItem.date.getTime() + oneMonth < date.getTime()) {
-				lastIndex++;
+		const isNextMonth = (currentDate: Date, targetDate: Date) =>
+			currentDate.getTime() + oneMonth < targetDate.getTime();
+
+		grades.forEach((grade) => {
+			const attendanceItem = meanAttendanceInMonth[monthIndex];
+
+			console.log(attendanceItem);
+
+			if (isNextMonth(attendanceItem.date, grade.date)) {
+				monthIndex++;
 			}
 
 			const performance = this.calculatePerformanceWithStability(
-				grade,
+				grade.grade,
 				attendanceItem.attendance,
 			);
 
-			return { date, performance };
+			processedPerformances.push({ date: grade.date, performance });
 		});
+
+		return processedPerformances;
 	}
 
-	// Функция высчитывает успеваемость по предмету в виде массива
-	// И вычисляет среднюю успеваемость в виде от -1 до 1
-	private formatSubject(subject: Pick<Subject, 'grades' | 'attendances'>) {
-		const decimalPlaces = 5; // Количество знаков после запятой
-		const roundingFactor = 10 ** decimalPlaces;
+	// Функция высчитывает успеваемость по предмету в одним числом в диапазоне от -1 до 1
+	private calculatePerformanceIndex(
+		performances: { performance: number }[],
+	): number {
+		const roundByDecimal = (decimalPlaces: number, numberToRound: number) =>
+			Math.round(decimalPlaces * 10 ** numberToRound) /
+			10 ** numberToRound;
 
-		const performance = this.getPerformance(subject);
+		const averagePerformance =
+			performances.reduce((sum, val) => sum + val.performance, 0) /
+			performances.length;
 
-		const meanSubjectPerformance =
-			performance.reduce((acc, { performance }) => acc + performance, 0) /
-			performance.length;
-		const subjectPerformanceIndex = meanSubjectPerformance / 50 - 1;
-		const subjectPerformanceIndexRounded =
-			Math.round(subjectPerformanceIndex * roundingFactor) /
-			roundingFactor;
-
-		return {
-			performance,
-			performanceIndex: subjectPerformanceIndexRounded,
-		};
+		// Диапазон от -1 до 1
+		return roundByDecimal((averagePerformance - 50) / 50, 5);
 	}
 
 	public formatOne(student: Student) {
+		const processedSubjects: Record<string, CompletedSubject> = {};
+
 		const subjectsData = student.getSubjectsData();
-		const subjects = subjectsData.reduce(
-			(subjects, { email, grades, attendances }) => ({
-				...subjects,
-				[email]: {
-					email,
-					grades,
-					attendances,
-					...this.formatSubject({ grades, attendances }),
-				},
-			}),
-			{} as Record<string, CompletedSubject>,
-		);
 
-		const subjectsSortedByPerformance = Object.values(subjects)
-			.sort((a, b) => b.performanceIndex - a.performanceIndex)
-			.map((subject) => ({
-				name: subject.name,
-				performanceIndex: subject.performanceIndex,
-			}));
+		subjectsData.forEach((subject) => {
+			const processedPerformance = this.calculatePerformances(subject);
+			const processedPerformanceIndex =
+				this.calculatePerformanceIndex(processedPerformance);
 
-		return { subjects, subjectsSortedByPerformance };
+			processedSubjects[subject.name] = {
+				...subject,
+				performance: processedPerformance,
+				performanceIndex: processedPerformanceIndex,
+			};
+		});
+
+		const subjectsSortedByPerformance = Object.values(processedSubjects)
+			.map(({ name, performanceIndex }) => ({ name, performanceIndex }))
+			.sort((a, b) => b.performanceIndex - a.performanceIndex);
+
+		return { subjects: processedSubjects, subjectsSortedByPerformance };
 	}
 
 	public formatMany(students: Student[]) {

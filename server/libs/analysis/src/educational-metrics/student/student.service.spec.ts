@@ -2,6 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { Student } from './entities/student.entity';
 import { StudentService } from './student.service';
 import { Student as StudentType } from './types/student.type';
+import { Subject } from './types/subject.type';
 
 describe('StudentService', () => {
 	let service: StudentService;
@@ -98,7 +99,7 @@ describe('StudentService', () => {
 					performanceIndex: 0.16667,
 				},
 			},
-			subjectsSortedByGrade: [
+			subjectsSortedByPerformance: [
 				{
 					name: 'Math',
 					performanceIndex: 0.16667,
@@ -140,7 +141,9 @@ describe('StudentService', () => {
 					performanceIndex: 0.2,
 				},
 			},
-			subjectsSortedByGrade: [{ name: 'Math', performanceIndex: 0.2 }],
+			subjectsSortedByPerformance: [
+				{ name: 'Math', performanceIndex: 0.2 },
+			],
 		});
 
 		let lastMonthEndDate = getLastMonthEndDate(2);
@@ -154,5 +157,59 @@ describe('StudentService', () => {
 		expectedResult = getExpectedResult(lastMonthEndDate);
 
 		expect(service.formatOne(student)).toEqual(expectedResult);
+	});
+
+	it.skip('test', () => {
+		const attendances: Subject['attendances'] = [
+			{
+				date: new Date('2024-01-01'),
+				attendance: 100,
+			},
+			{
+				date: new Date('2024-02-01'),
+				attendance: 100,
+			},
+			{
+				date: new Date('2024-03-01'),
+				attendance: 100,
+			},
+			{
+				date: new Date('2024-03-02'),
+				attendance: 100,
+			},
+			{
+				date: new Date('2024-03-03'),
+				attendance: 0,
+			},
+			{
+				date: new Date('2024-04-01'),
+				attendance: 0,
+			},
+			{
+				date: new Date('2024-04-02'),
+				attendance: 0,
+			},
+		];
+
+		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+		// @ts-ignore
+		expect(service.getMeanAttendanceInMonth(attendances)).toEqual([
+			{
+				date: new Date('2024-01-01'),
+				attendance: 100,
+			},
+			{
+				date: new Date('2024-02-01'),
+				attendance: 100,
+			},
+			{
+				date: new Date('2024-03-01'),
+				attendance: 67,
+			},
+			{
+				date: new Date('2024-04-01'),
+				attendance: 0,
+			},
+		]);
 	});
 });
