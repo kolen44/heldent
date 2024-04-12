@@ -27,7 +27,7 @@ export default function Account() {
 						</div>
 					</div>
 				</div>
-				<div className='bg-[#0A062A] h-full  w-screen xl:w-fit col-span-8 rounded-xl backdrop-blur-md '>
+				<div className='bg-[#0A062A] h-full  w-screen xl:w-fit col-span-8 rounded-xl backdrop-blur-md mr-20'>
 					<Suspense fallback={<div>Loading...</div>}>
 						<Component />
 					</Suspense>
