@@ -1,6 +1,6 @@
 import { AiChatModule } from '@ai-chat/ai-chat';
-import { TokenModule } from '@app/token';
 import { Module } from '@nestjs/common';
+import { TokenModule } from '@token/token';
 import { StudentController } from './student.controller';
 import { StudentService } from './student.service';
 

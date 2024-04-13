@@ -1,6 +1,6 @@
-import { TokenService } from '@app/token';
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { TokenService } from '@token/token';
 import * as bcrypt from 'bcrypt';
 import { Repository } from 'typeorm';
 import { Student } from '../database/entities/student.entity';

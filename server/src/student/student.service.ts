@@ -12,7 +12,7 @@ export class StudentService {
 
 	private getMessageAboutContext() {
 		const dataAboutUniversity = readFileSync(
-			'../data-about-university.txt',
+			'../data/data-about-university.txt',
 			'utf8',
 		);
 

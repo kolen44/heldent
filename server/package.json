@@ -91,10 +91,6 @@
     "roots": [
       "<rootDir>/src/",
       "<rootDir>/libs/"
-    ],
-    "moduleNameMapper": {
-      "^Y/parser(|/.*)$": "<rootDir>/libs/parser/src/$1",
-      "^database(|/.*)$": "<rootDir>/database/$1"
-    }
+    ]
   }
 }
