@@ -1,6 +1,5 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import axios from 'axios';
-import { GenerateTextDto } from './dto/generate-text.dto';
 import { Chat } from './entities/chat/chat.entity';
 import {
 	YandexChatMessageRequest,
@@ -20,7 +19,7 @@ export class AiChatService {
 			modelUri: `gpt://${process.env.FOLDER_ID}/yandexgpt/latest`,
 			completionOptions: {
 				stream: false,
-				temperature: 0.6, // FIXME поменять либо на |от 0 до 0.2| или |от 0.8 до 1|
+				temperature: 0, // FIXME поменять либо на |от 0 до 0.2| или |от 0.8 до 1|
 				maxTokens: '2000',
 			},
 			messages,
@@ -44,8 +43,7 @@ export class AiChatService {
 		}
 	}
 
-	async generate(generateTextDto: GenerateTextDto): Promise<Chat | null> {
-		const { chat } = generateTextDto;
+	async generate(chat: Chat): Promise<Chat | null> {
 		const messageData = await this.getResponse(chat.chatData);
 
 		if (!messageData)
