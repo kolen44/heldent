@@ -2,6 +2,7 @@
 
 import Image from 'next/image'
 import { useState } from 'react'
+import { ToastContainer } from 'react-toastify'
 import { yandexGPTChat } from '../../../features/YandexChat'
 import GreenButton from '../../../widgets/GreenButton/GreenButton'
 
@@ -59,6 +60,7 @@ export default function Account() {
 	const [isLogin, setIsLogin] = useState(false)
 	return (
 		<div className=' h-full  '>
+			<ToastContainer />
 			<div className='  h-full w-100 text-white-400 overflow-hidden flex flex-col justify-between '>
 				<div
 					className='w-full mt-10 flex flex-col gap-10 h-1/2  overflow-y-auto  relative'

@@ -142,7 +142,7 @@ export default function Calendar() {
 	}
 
 	return (
-		<div className='bg-[#0A062A] flex flex-col   items-center justify-between p-24 rounded-xl backdrop-blur-md'>
+		<div className='bg-[#544e88] flex flex-col   items-center justify-between p-24 rounded-xl backdrop-blur-md'>
 			<div className='grid grid-cols-10'>
 				<ToastContainer />
 				<div className='col-span-8'>

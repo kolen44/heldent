@@ -45,11 +45,7 @@ export default function Header() {
 						</p>
 					</div>
 					<div className='flex items-center justify-center max-w-2xl  md:justify-between '>
-						<Link
-							href={
-								'https://ilyas-organization-8.gitbook.io/helden/bystryi-start'
-							}
-						>
+						<Link href={'/account'}>
 							<GreenButton text={'Начать'} />
 						</Link>
 

@@ -36,7 +36,7 @@ export function Course() {
 	return (
 		<div className='h-fit md:h-screen bg-[url(/image3.webp)] flex items-center justify-between bg-no-repeat bg-cover mt-20 md:mt-0'>
 			<div className='w-full flex justify-center md:justify-between'>
-				<div className='-z-1 hidden md:block brightness-130'>
+				<div className='-z-1 hidden xl:block brightness-130'>
 					<motion.div
 						animate={{ x: isUp ? 5 : -5, y: isUp ? -5 : 5 }}
 						transition={{ duration: 2, loop: Infinity }}

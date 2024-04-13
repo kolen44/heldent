@@ -4,7 +4,7 @@ import ReactECharts from 'echarts-for-react'
 export default function EchartDayAttendance() {
 	const option = {
 		title: {
-			text: 'Дневная посещаемость',
+			text: 'Расписание второй смены',
 			left: 'center',
 		},
 		legend: {
@@ -38,15 +38,18 @@ export default function EchartDayAttendance() {
 	return (
 		<ReactECharts
 			option={option}
-			style={{ height: 600, width: 500 }}
+			style={{ height: 600, width: 700 }}
 			// opts={{ locale: 'FR' }}
 		/>
 	)
 }
 
 const simpleChartData = [
-	{ value: 40, name: 'История' },
-	{ value: 38, name: 'География' },
-	{ value: 32, name: 'Английский' },
-	{ value: 30, name: 'Математика' },
+	{ value: 90, name: '4-я пара (14:55—16:25)' },
+	{ value: 15, name: 'Перерыв' },
+	{ value: 90, name: '5-я пара (16:40—18:10)' },
+	{ value: 10, name: 'Перерыв' },
+	{ value: 90, name: '6-я пара (18:20—19:50) ' },
+	{ value: 10, name: 'Перерыв ' },
+	{ value: 90, name: '7-я пара (20:00—21:30) ' },
 ]
