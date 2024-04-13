@@ -1,6 +1,6 @@
 import { IsDateString, IsNotEmpty, IsString } from 'class-validator';
 
-export class CalendarUserDto {
+export class CalendarStudentDto {
 	@IsDateString()
 	@IsNotEmpty()
 	public readonly date: Date;

@@ -2,8 +2,8 @@ import { TokenService } from '@app/token';
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import * as bcrypt from 'bcrypt';
-import { Student } from 'database/entities/student.entity';
 import { Repository } from 'typeorm';
+import { Student } from '../database/entities/student.entity';
 import { LoginUserDto } from './dto/login-user.dto';
 import { RegisterUserDto } from './dto/register-user.dto';
 

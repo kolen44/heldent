@@ -4,12 +4,9 @@ import {
 	Entity,
 	JoinTable,
 	ManyToMany,
-	OneToMany,
 	PrimaryGeneratedColumn,
 	UpdateDateColumn,
 } from 'typeorm';
-import { Attendance } from './attendance.entity';
-import { Grade } from './grade.entity';
 import { Subject } from './subject.entity';
 
 @Entity()
@@ -28,14 +25,6 @@ export class Student {
 
 	@UpdateDateColumn()
 	updateAt: Date;
-
-	@OneToMany(() => Grade, (grade) => grade.student, { cascade: true })
-	grades: Grade[];
-
-	@OneToMany(() => Attendance, (attendance) => attendance.student, {
-		cascade: true,
-	})
-	attendances: Attendance[];
 
 	@ManyToMany(() => Subject, (subject) => subject.students)
 	@JoinTable()
