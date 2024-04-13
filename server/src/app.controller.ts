@@ -9,10 +9,4 @@ export class AppController {
 	getHello() {
 		return this.appService.getHello();
 	}
-
-	// TODO Удалить
-	@Get('all_subject_test')
-	getAllSubject() {
-		return this.appService.getAllSubject();
-	}
 }

@@ -89,22 +89,23 @@ export class StudentService {
 			},
 			{
 				role: YandexChatRole.USER,
-				text: `Привет! Я обучаюсь университете на программе по ${data.subject}. Моя цель - ${data.goal},учитывая это можешь подсказать мне план на неделю, чтобы улучшить мои знания в этой области? Сегодня ${data.date}, и я хотел бы план на 5 дней. Помимо этого, буду благодарен за прикрепление ссылок на статьи, видео или любые материалы, которые помогут мне углубить знания в ${data.subject}. Верни, пожалуйста, только план в формате JSON.`,
+				text: `Привет! Я обучаюсь университете на программе по ${data.subject}. Моя цель - ${data.goal},учитывая это можешь подсказать мне план на неделю, чтобы улучшить мои знания в этой области? Сегодня ${data.date}, и я хотел бы план на 5 дней. Помимо этого, буду благодарен за прикрепление ссылок на статьи, видео или любые материалы, которые помогут мне углубить знания в ${data.subject}.`,
 			},
 		]);
 
-		const chatWithAnswer = await this.aiChatService.generate(chat);
+		const recursionGetterAnswer = async () => {
+			const chatWithAnswer = await this.aiChatService.generate(chat);
+			let text = chatWithAnswer.getLastMessage().text;
+			try {
+				if (text.includes('```json'))
+					text = text.replace('```json', '').replace('```', '');
+				return JSON.parse(text);
+			} catch (err) {
+				console.log('Ошибка парсинга\nТекст:', text, '\n\nError', err);
+				return await recursionGetterAnswer();
+			}
+		};
 
-		let text = chatWithAnswer.getLastMessage().text;
-		if (text.includes('```json')) {
-			text = text.replace('```json', '').replace('```', '');
-		}
-
-		try {
-			return JSON.stringify(text);
-		} catch (err) {
-			console.log('err', err);
-			return text;
-		}
+		return await recursionGetterAnswer();
 	}
 }

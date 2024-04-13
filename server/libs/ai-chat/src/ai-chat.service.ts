@@ -19,7 +19,7 @@ export class AiChatService {
 			modelUri: `gpt://${process.env.FOLDER_ID}/yandexgpt/latest`,
 			completionOptions: {
 				stream: false,
-				temperature: 0.1, // FIXME поменять либо на |от 0 до 0.2| или |от 0.8 до 1|
+				temperature: 0, // FIXME поменять либо на |от 0 до 0.2| или |от 0.8 до 1|
 				maxTokens: '2000',
 			},
 			messages,
