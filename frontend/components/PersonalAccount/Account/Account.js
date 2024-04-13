@@ -87,7 +87,7 @@ export default function Account() {
 								placeholder='Введите сообщение'
 								className='bg-[#D9D9D9]  py-4 px-6 placeholder:font-thin  placeholder:text-sm text-[#0A0625] w-1/2 placeholder:text-opacity-50 2xl:placeholder:text-xl placeholder:text-[#0A0625] rounded-lg outline-none border-none font-medium'
 							/>
-							<div className='inline-flex z-10  shadow-sm'>
+							<div className='inline-flex z-10 gap-1 shadow-sm'>
 								<button
 									className='px-4 cursor-pointer rounded-md py-2 text-sm font-medium text-blue-700 bg-white border border-gray-200 rounded-s-lg hover:bg-gray-100 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white'
 									onClick={() => setRole('assistant')}
