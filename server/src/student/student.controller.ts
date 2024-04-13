@@ -5,6 +5,7 @@ import {
 	Get,
 	Param,
 	Post,
+	Query,
 	Req,
 	UseGuards,
 } from '@nestjs/common';
@@ -63,8 +64,9 @@ export class StudentController {
 	@Get('assistant')
 	public async askAssistant(
 		@Req() req: Request & { student: Student },
+		@Query('role') role: string,
 		@Body() question: AskAssistantDto,
 	) {
-		return this.studentService.askAssistant(question);
+		return this.studentService.askAssistant(question, role);
 	}
 }

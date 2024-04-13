@@ -178,30 +178,72 @@ export class StudentService {
 		return this.formatSubject(subject); // this.formatStudent(studentWithSubjects);
 	}
 
-	public async askAssistant(askAssistantDto: AskAssistantDto) {
+	private getMessageAboutContext() {
 		const dataAboutUniversity = readFileSync(
 			'../data-about-university.txt',
 			'utf8',
 		);
 
-		const chat = new Chat([
+		return {
+			role: YandexChatRole.SYSTEM,
+			text: 'Вот данные для контекста:' + '\n' + dataAboutUniversity,
+		};
+	}
+
+	private getAssistantChat(question: string) {
+		return new Chat([
+			this.getMessageAboutContext(),
 			{
 				role: YandexChatRole.SYSTEM,
-				text: 'Вот данные для контекста:' + '\n' + dataAboutUniversity,
+				text: 'Представь себя в роли ассистента для студентов вуза. Говори на одной волне со студентами, будто ты и есть один из них. Отвечай на вопросы студентов, основываясь на информации о вузе. Если есть возможность, расскажи о мастер-классах или курсах, если это уместно.',
 			},
-			{
-				role: YandexChatRole.SYSTEM,
-				text: 'Ты ассистент для вуза, отвечай студентам на их вопросы, основываясь на данных о вузе, отвечай в разговорной форме, как будто ты на одной волне со студентами. Отвечай так, будто ты представляешь этот вуз. Не забывай о том, что тебя могут спрашивать первокурсники, говори всё доходчиво, что бы каждый тебя понял. Если есть возможность рассказать про какой-нибудь мастер-класс или курс, обязательно скажи про него, если это уместно.',
-			},
-			{
-				role: YandexChatRole.USER,
-				text: askAssistantDto.question,
-			},
+			{ role: YandexChatRole.USER, text: question },
 		]);
+	}
+
+	private getProgrammerChat(question: string) {
+		return new Chat([
+			this.getMessageAboutContext(),
+			{
+				role: YandexChatRole.SYSTEM,
+				text: 'Привет! Представь себя как опытный программист, готовый помочь студентам в изучении их предмета. Твоя цель - отвечать на вопросы студентов, касающиеся программирования и языка C++, а также предоставлять ресурсы для дальнейшего изучения. Помимо ответов на вопросы, можешь предложить студенту ресурсы для самостоятельного изучения, например, курсы, учебники или онлайн-платформы. При необходимости уточни, есть ли вузовские ресурсы, которые могут быть полезны для студентов. Если вопрос не связан с программированием, можешь предложить студенту обратиться к другому человеку или преподавателю, который сможет ему помочь в этом вопросе. Постарайся использовать точные термины и детально вводить студента в курс дела, чтобы он получил максимально полезную информацию.',
+			},
+			{ role: YandexChatRole.USER, text: question },
+		]);
+	}
+
+	private getPsychologistChat(question: string) {
+		return new Chat([
+			this.getMessageAboutContext(),
+			{
+				role: YandexChatRole.SYSTEM,
+				text: 'Привет! Представь себя как психолог для студентов вуза. Твоя задача — говорить на одной волне со студентами, чтобы они чувствовали себя комфортно. Если вопрос не относится к психологической области, направь студента к другому преподавателю или специалисту. Основывай свои ответы на данных о вузе для более точной помощи студентам. Постарайся быть понятным и поддерживать доверительную атмосферу, чтобы студент мог свободно общаться и получить нужную помощь.',
+			},
+			{ role: YandexChatRole.USER, text: question },
+		]);
+	}
+
+	public async askAssistant(askAssistantDto: AskAssistantDto, role: string) {
+		let chat: Chat;
+
+		switch (role) {
+			case 'assistant' || null:
+				chat = this.getAssistantChat(askAssistantDto.question);
+				break;
+
+			case 'programmer':
+				chat = this.getProgrammerChat(askAssistantDto.question);
+				break;
+
+			case 'psychologist':
+				chat = this.getPsychologistChat(askAssistantDto.question);
+				break;
+
+			default:
+				throw new BadRequestException('Unknown role');
+		}
 
 		await this.aiChatService.generate(new GenerateTextDto(chat));
-
-		// console.log(chat);
 
 		return chat.getLastMessage();
 	}
