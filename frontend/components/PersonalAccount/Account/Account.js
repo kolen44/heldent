@@ -2,10 +2,28 @@
 
 import Image from 'next/image'
 import { useState } from 'react'
+import { yandexGPTChat } from '../../../features/YandexChat'
 import GreenButton from '../../../widgets/GreenButton/GreenButton'
 
 export default function Account() {
-	function handlerSubmit() {
+	const [text, setText] = useState('')
+	const [role, setRole] = useState('assistant')
+	const [yandexGreeting, setYandexGreeting] = useState(
+		'Обученная нейросеть яндекса совместно с Heldent ответит на любой вопрос и поможет в любой ситуации!'
+	)
+	const [show, setShow] = useState('')
+	async function handlerSubmit() {
+		if (text.length < 2) {
+			return setYandexGreeting(
+				'Пожалуйста , введите больше текста ! Помните - чем больше текста тем качественнее будет сгенерированный ответ от нашей обученной модели YandexGPT'
+			)
+		} else {
+			setYandexGreeting(
+				'Спасибо что пользуетесь нейросетью мы это очень ценим и благодарим Вас!'
+			)
+		}
+		const response = await (await yandexGPTChat({ role, text })).json()
+		console.log(response)
 		var eeeElement = document.querySelector('#chat .eee')
 
 		// Проверяем, существует ли элемент с классом "eee"
@@ -18,7 +36,7 @@ export default function Account() {
 
 		// Создаем новый элемент div
 		var newDivElement = document.createElement('div')
-		newDivElement.className = 'p-10 eee flex gap-5'
+		newDivElement.className = 'px-10 eee flex items-center gap-5'
 
 		// Создаем изображение
 		var imageElement = document.createElement('img')
@@ -29,8 +47,7 @@ export default function Account() {
 
 		// Создаем заголовок h2
 		var h2Element = document.createElement('h2')
-		h2Element.innerHTML =
-			'Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia quas, repudiandae sesukai.'
+		h2Element.innerHTML = await response.text
 
 		// Добавляем изображение и заголовок в div
 		newDivElement.appendChild(imageElement)
@@ -44,15 +61,13 @@ export default function Account() {
 		<div className=' h-full  '>
 			<div className='  h-full w-100 text-white-400 overflow-hidden flex flex-col justify-between '>
 				<div
-					className='w-full mt-0 flex flex-col gap-10 h-1/2  overflow-y-auto  relative'
+					className='w-full mt-10 flex flex-col gap-10 h-1/2  overflow-y-auto  relative'
 					id='chat'
 				>
 					<div className='p-10  flex gap-5'>
 						<Image src='/yandex.png' width={50} height={50} alt='Yandex' />
 						<h2>
-							Обученная нейросеть яндекса совместно с Heldent ответит на любой
-							ваш запрос . Нужно только пожелать ... И все обязательно сбудется
-							! Начинайте диалог!
+							{yandexGreeting}. Текущая роль - {role}
 						</h2>
 					</div>
 				</div>
@@ -61,13 +76,35 @@ export default function Account() {
 						<div onClick={handlerSubmit}>
 							<GreenButton text={'Отправить'} />
 						</div>
-						<div className='grid w-full justify-items-start'>
+						<div className='flex w-full justify-between gap-10'>
 							<input
 								type='text'
-								name='name'
+								name='text'
+								value={text}
+								onChange={e => setText(e.target.value)}
 								placeholder='Введите сообщение'
 								className='bg-[#D9D9D9]  py-4 px-6 placeholder:font-thin  placeholder:text-sm text-[#0A0625] w-1/2 placeholder:text-opacity-50 2xl:placeholder:text-xl placeholder:text-[#0A0625] rounded-lg outline-none border-none font-medium'
 							/>
+							<div className='inline-flex z-10  shadow-sm'>
+								<button
+									className='px-4 cursor-pointer rounded-md py-2 text-sm font-medium text-blue-700 bg-white border border-gray-200 rounded-s-lg hover:bg-gray-100 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white'
+									onClick={() => setRole('assistant')}
+								>
+									Assistant
+								</button>
+								<button
+									className='px-4 cursor-pointer rounded-md py-2 text-sm font-medium text-blue-700 bg-white border border-gray-200 rounded-s-lg hover:bg-gray-100 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white'
+									onClick={() => setRole('psychologist')}
+								>
+									Psychologist
+								</button>
+								<button
+									className='px-4 cursor-pointer rounded-md py-2 text-sm font-medium text-blue-700 bg-white border border-gray-200 rounded-s-lg hover:bg-gray-100 focus:z-10 focus:ring-2 focus:ring-blue-700 focus:text-blue-700 dark:bg-gray-800 dark:border-gray-700 dark:text-white dark:hover:text-white dark:hover:bg-gray-700 dark:focus:ring-blue-500 dark:focus:text-white'
+									onClick={() => setRole('programmer')}
+								>
+									Programmer
+								</button>
+							</div>
 						</div>
 					</div>
 				</div>

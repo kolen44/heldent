@@ -5,11 +5,10 @@ export const POST = async function handler(req) {
 	const data = await req.json()
 	try {
 		const response = await axios.post(
-			`http://localhost:5000/api/student/calendar`,
+			`http://localhost:5000/api/student/assistant`,
 			{
-				date: data.date,
-				subject: data.subject,
-				goal: data.goal,
+				role: data.role,
+				question: data.text,
 			}
 		)
 		return new NextResponse(JSON.stringify(response.data), {

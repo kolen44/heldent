@@ -56,24 +56,29 @@ export class StudentService {
 		chat.addMessageBehalfUser(question);
 
 		await this.aiChatService.generate(chat);
+		const response = await chat.getLastMessage();
+		console.log(response);
 
-		return chat.getLastMessage();
+		return JSON.stringify(response);
 	}
 
 	async createCalendar(data: CalendarStudentDto) {
 		const chat = new Chat();
 
 		chat.addMessageBehalfSystem(
-			`Отдай ответ в формате json в следующем формате. [{'data':'дата сегодня','plan':'план на сегодня'},{'data':'завтра','plan':'План на завтра'},  и так для следующих дней]. Кроме json ничего НЕ возвращай`,
+			`Отдай ответ в формате json в следующем формате. [{'data':'дата сегодня','plan':'план на сегодня'},{'data':'завтра','plan':'План на завтра'},  и так для следующих дней].Учитывай что моего наставника зовут Виктор Барисов можешь использовать это в генерации ответа . Кроме json ничего НЕ возвращай`,
 		);
 
 		chat.addMessageBehalfUser(
-			`Привет! Я обучаюсь университете на программе по ${data.subject}. Моя цель - ${data.goal},учитывая это можешь подсказать мне план на неделю, чтобы улучшить мои знания в этой области? Сегодня ${data.date}, и я хотел бы план на 5 дней. Помимо этого, буду благодарен за прикрепление ссылок на статьи, видео или любые материалы, которые помогут мне углубить знания в ${data.subject}.`,
+			`Привет! Я обучаюсь в ITHub на программе по ${data.subject}. Моя цель - ${data.goal},учитывая это можешь подсказать мне план  чтобы улучшить мои знания в этой области? Сегодня ${data.date}, и я хотел бы план на 5 дней НУЖЕН ПЛАН НА 5 ДНЕЙ. Этот план обязан помочь мне в улучшении знаний в "в ${data.subject}.ОТВЕТ ВЕРНИ ТОЛЬКО В ФОРМАТЕ JSON!!!!!!!!!`,
 		);
 
 		const refactorTextByJson = (text: string) => {
-			if (text.includes('```json'))
-				return text.replace('```json', '').replace('```', '');
+			if (text.includes('```json')) {
+				const startCalendar = text.indexOf('```json') + 7;
+				const endCalendar = text.indexOf('```', startCalendar);
+				return text.slice(startCalendar, endCalendar);
+			}
 			return text;
 		};
 
@@ -82,7 +87,7 @@ export class StudentService {
 			const text = chatWithAnswer.getLastMessage().text;
 
 			try {
-				return JSON.parse(refactorTextByJson(text));
+				return JSON.stringify(refactorTextByJson(text));
 			} catch (err) {
 				console.log('Ошибка парсинга\nТекст:', text, '\n\nError', err);
 				return await recursionGetterAnswer();

@@ -3,7 +3,7 @@ import { IsDateString, IsNotEmpty, IsString } from 'class-validator';
 export class CalendarStudentDto {
 	@IsDateString()
 	@IsNotEmpty()
-	public readonly date: Date;
+	public readonly date: string;
 
 	@IsString()
 	@IsNotEmpty()
