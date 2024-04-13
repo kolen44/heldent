@@ -60,7 +60,7 @@ export class StudentService {
 		let chat: Chat;
 
 		switch (role) {
-			case 'assistant' || null:
+			case 'assistant':
 				chat = this.getAssistantChat(question);
 				break;
 
