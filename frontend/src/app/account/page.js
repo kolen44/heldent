@@ -9,7 +9,7 @@ export default function Account() {
 	const [pageNumber, setPageNumber] = useState(1)
 	const Component = SelectedComponent(pageNumber)
 	return (
-		<div className='bg-[#0A062A] max-h-screen overflow-hidden'>
+		<div className='bg-[#0A062A] xl:max-h-screen overflow-hidden'>
 			<div className='grid grid-cols-10 h-screen w-screen xl:p-20 xl:pr-28 xl:pl-7 text-white bg-[url(/image.webp)] bg-no-repeat bg-cover '>
 				<div className='col-span-2 hidden xl:flex justify-center'>
 					<button className='text-md absolute pt-10 z-50 text-5xl text-center'>

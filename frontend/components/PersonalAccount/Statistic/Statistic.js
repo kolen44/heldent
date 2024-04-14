@@ -4,7 +4,7 @@ import EchartDayAttendance from '../../../widgets/EchartDayAttendance/EchartDayA
 export default function Statistic() {
 	return (
 		<div className='flex flex-col overflow-y-hidden h-100 w-100 text-white'>
-			<div className='flex flex-row gap-5'>
+			<div className='flex flex-row gap-5 max-w-screen-sm xl:max-w-screen-xl'>
 				<EchartCircleStatistic />
 				<EchartDayAttendance />
 			</div>
